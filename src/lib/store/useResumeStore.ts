@@ -37,6 +37,7 @@ export interface ResumeStoreState {
   setTitle: (title: string) => void;
   setTargetRole: (role: string) => void;
   setActiveTab: (tab: string) => void;
+  setResumeContent: (content: ResumeContent) => void;
   updatePersonalInfo: (data: Partial<PersonalInfo>) => void;
 
   // Work experience
@@ -173,6 +174,15 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   setTitle: (title) => set({ title, isDirty: true }),
   setTargetRole: (targetRole) => set({ targetRole, isDirty: true }),
   setActiveTab: (activeTab) => set({ activeTab }),
+
+  setResumeContent: (content) =>
+    set((state) => ({
+      undoStack: [...state.undoStack.slice(-15), state.content],
+      redoStack: [],
+      content,
+      healthScore: computeResumeScore(content),
+      isDirty: true,
+    })),
 
   updatePersonalInfo: (data) =>
     set((state) => {

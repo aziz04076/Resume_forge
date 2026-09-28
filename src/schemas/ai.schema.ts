@@ -147,6 +147,66 @@ export const CopilotMessageResponseSchema = z.object({
   followUpSuggestions: z.array(z.string()),
 });
 
+// 10. Tailor to JD Schema with Diff & Non-Invented Rules
+export const TailoredResumeResponseSchema = z.object({
+  tailoredContent: ResumeContentSchema,
+  diffSummary: z.array(
+    z.object({
+      id: z.string(),
+      section: z.string(),
+      originalText: z.string(),
+      modifiedText: z.string(),
+      reason: z.string(),
+    })
+  ),
+  suggestedAdditions: z.array(
+    z.object({
+      section: z.string(),
+      suggestedFact: z.string(),
+      rationale: z.string(),
+    })
+  ),
+});
+
+// 11. Recruiter 6-Second Scan Schema
+export const RecruiterScanResponseSchema = z.object({
+  firstImpression: z.enum(["Strong Hire", "Hire", "Leaning No-Hire", "No-Hire"]),
+  firstNotice: z.string(),
+  eyeTrackingPath: z.array(z.string()),
+  heatmapZones: z.array(
+    z.object({
+      section: z.string(),
+      intensity: z.enum(["high", "medium", "low"]),
+      feedback: z.string(),
+    })
+  ),
+  immediateStrengths: z.array(z.string()),
+  dealbreakers: z.array(z.string()),
+  verdictRationale: z.string(),
+});
+
+// 12. Salary & Offer Coach Schema
+export const SalaryCoachResponseSchema = z.object({
+  roleTitle: z.string(),
+  location: z.string(),
+  marketBenchmark: z.object({
+    percentile25: z.string(),
+    median: z.string(),
+    percentile75: z.string(),
+    percentile90: z.string(),
+  }),
+  scripts: z.array(
+    z.object({
+      scenario: z.string(),
+      subject: z.string(),
+      body: z.string(),
+      tactics: z.string(),
+    })
+  ),
+  counterOfferStrategies: z.array(z.string()),
+  leveragePoints: z.array(z.string()),
+});
+
 export type BulletImproverResponse = z.infer<typeof BulletImproverResponseSchema>;
 export type JDMatcherResponse = z.infer<typeof JDMatcherResponseSchema>;
 export type ATSSimulatorResponse = z.infer<typeof ATSSimulatorResponseSchema>;
@@ -157,3 +217,6 @@ export type InterviewAnswerEvaluation = z.infer<typeof InterviewAnswerEvaluation
 export type LinkedInOptimizerResponse = z.infer<typeof LinkedInOptimizerResponseSchema>;
 export type CareerAdvisorResponse = z.infer<typeof CareerAdvisorResponseSchema>;
 export type CopilotMessageResponse = z.infer<typeof CopilotMessageResponseSchema>;
+export type TailoredResumeResponse = z.infer<typeof TailoredResumeResponseSchema>;
+export type RecruiterScanResponse = z.infer<typeof RecruiterScanResponseSchema>;
+export type SalaryCoachResponse = z.infer<typeof SalaryCoachResponseSchema>;

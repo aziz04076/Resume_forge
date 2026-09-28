@@ -353,7 +353,7 @@ export default function MockInterviewPage() {
             {/* Step 3: Evaluation Breakdown Card */}
             {evaluation && (
               <div className="p-5 bg-slate-950 border border-purple-500/20 rounded-xl space-y-4 animate-in fade-in duration-200">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-800 gap-3">
                   <div className="flex items-center gap-3">
                     <div
                       className={`text-2xl font-bold ${
@@ -371,7 +371,77 @@ export default function MockInterviewPage() {
                       <div className="text-[11px] text-slate-400">{evaluation.confidenceRating}</div>
                     </div>
                   </div>
+
+                  {/* Filler Word Counter */}
+                  <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
+                    <div>
+                      <span className="text-[10px] text-slate-500 uppercase font-mono block">Filler Words</span>
+                      <span className="font-bold text-amber-400">{evaluation.fillerWordCount || 0} detected</span>
+                    </div>
+                    {evaluation.fillerWordsDetected && evaluation.fillerWordsDetected.length > 0 && (
+                      <div className="text-[10px] text-slate-400">
+                        ({evaluation.fillerWordsDetected.join(", ")})
+                      </div>
+                    )}
+                  </div>
                 </div>
+
+                {/* STAR Rubric Breakdown */}
+                {evaluation.starScores && (
+                  <div className="p-3.5 bg-slate-900/80 rounded-xl border border-slate-800 space-y-2">
+                    <div className="text-xs font-bold text-slate-200">STAR Method Evaluation Rubric</div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                      <div>
+                        <div className="flex justify-between text-[11px] text-slate-400 mb-1">
+                          <span>Situation</span>
+                          <span className="font-mono text-purple-400">{evaluation.starScores.situation}/25</span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-purple-500 rounded-full"
+                            style={{ width: `${((evaluation.starScores.situation || 20) / 25) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-[11px] text-slate-400 mb-1">
+                          <span>Task</span>
+                          <span className="font-mono text-blue-400">{evaluation.starScores.task}/25</span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-blue-500 rounded-full"
+                            style={{ width: `${((evaluation.starScores.task || 20) / 25) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-[11px] text-slate-400 mb-1">
+                          <span>Action</span>
+                          <span className="font-mono text-indigo-400">{evaluation.starScores.action}/25</span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-indigo-500 rounded-full"
+                            style={{ width: `${((evaluation.starScores.action || 20) / 25) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-[11px] text-slate-400 mb-1">
+                          <span>Result</span>
+                          <span className="font-mono text-emerald-400">{evaluation.starScores.result}/25</span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-500 rounded-full"
+                            style={{ width: `${((evaluation.starScores.result || 20) / 25) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   {/* Strengths */}
