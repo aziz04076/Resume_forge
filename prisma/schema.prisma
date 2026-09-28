@@ -1,0 +1,204 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  passwordHash  String?
+  image         String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  resumes           Resume[]
+  applications      JobApplication[]
+  interviewSessions MockInterviewSession[]
+  coverLetters      CoverLetter[]
+  portfolios        UserPortfolio[]
+}
+
+model Resume {
+  id             String   @id @default(uuid())
+  userId         String
+  title          String   @default("Untitled Resume")
+  slug           String   @default(uuid())
+  templateId     String   @default("minimal-ats")
+  themeConfig    Json     // Font family, colors, spacing, line height, section layout
+  content        Json     // Structured resume data (personal, summary, experience, education, skills, projects, certifications, custom)
+  healthScore    Int      @default(0)
+  targetRole     String?
+  language       String   @default("en")
+  isPublic       Boolean  @default(false)
+  publicToken    String?  @unique
+  viewCount      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  versions     ResumeVersion[]
+  atsAnalyses  ATSAnalysis[]
+  comments     ResumeComment[]
+  applications JobApplication[]
+  portfolios   UserPortfolio[]
+  coverLetters CoverLetter[]
+
+  @@index([userId])
+  @@index([publicToken])
+}
+
+model ResumeVersion {
+  id            String   @id @default(uuid())
+  resumeId      String
+  versionNumber Int
+  snapshotData  Json
+  changeSummary String?
+  createdAt     DateTime @default(now())
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+}
+
+model JobApplication {
+  id             String            @id @default(uuid())
+  userId         String
+  resumeId       String?
+  company        String
+  position       String
+  location       String?
+  salaryRange    String?
+  status         ApplicationStatus @default(SAVED)
+  jobUrl         String?
+  jobDescription String?           @db.Text
+  notes          String?           @db.Text
+  appliedDate    DateTime?
+  followUpDate   DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume    Resume?               @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  reminders ApplicationReminder[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model ApplicationReminder {
+  id            String    @id @default(uuid())
+  applicationId String
+  userId        String
+  remindAt      DateTime
+  sent          Boolean   @default(false)
+  sentAt        DateTime?
+  message       String?
+
+  application JobApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([remindAt, sent])
+}
+
+model ATSAnalysis {
+  id              String   @id @default(uuid())
+  resumeId        String
+  jobTitle        String?
+  jobDescription  String   @db.Text
+  overallScore    Int
+  categoryScores  Json     // Keyword match, experience impact, format score, skills coverage
+  missingKeywords String[]
+  skillGaps       String[]
+  recommendations Json
+  createdAt       DateTime @default(now())
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+}
+
+model MockInterviewSession {
+  id             String   @id @default(uuid())
+  userId         String
+  roleTitle      String
+  jobDescription String?  @db.Text
+  questions      Json     // Array of questions, model answers, user answers, scores, and feedback
+  overallScore   Int?
+  feedbackReport Json?
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CoverLetter {
+  id             String   @id @default(uuid())
+  userId         String
+  resumeId       String?
+  jobTitle       String
+  companyName    String
+  jobDescription String?  @db.Text
+  tone           String   @default("professional")
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+}
+
+model ResumeComment {
+  id          String   @id @default(uuid())
+  resumeId    String
+  authorName  String
+  authorEmail String?
+  sectionKey  String   // e.g. "workExperience.0"
+  text        String
+  isResolved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+}
+
+model UserPortfolio {
+  id               String   @id @default(uuid())
+  userId           String
+  resumeId         String
+  subdomain        String   @unique
+  theme            String   @default("modern-dark")
+  customBio        String?
+  socialLinks      Json?
+  featuredProjects Json?
+  isPublished      Boolean  @default(true)
+  viewCount        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([subdomain])
+}

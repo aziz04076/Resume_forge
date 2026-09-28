@@ -1,0 +1,38 @@
+name: ResumeForge CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build, Lint & Automated Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Run Test Suite
+        run: npm test
+
+      - name: Run Next.js Production Build
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/resumeforge?schema=public"
+          NEXTAUTH_SECRET: "ci_testing_secret_key_minimum_32_characters"
+          NEXTAUTH_URL: "http://localhost:3000"
