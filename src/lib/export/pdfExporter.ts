@@ -1,35 +1,47 @@
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import React from "react";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { ResumeContent, ThemeConfig } from "@/schemas/resume.schema";
+import { ResumePdfDocument } from "./pdfTextRenderer";
 
-export async function exportToClientPdf(elementId: string, fileName = "Resume.pdf"): Promise<void> {
-  const element = document.getElementById(elementId);
-  if (!element) {
-    throw new Error(`Element with id ${elementId} not found`);
-  }
-
-  // Create high-res canvas (2x scale for crisp print text)
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    logging: false,
-    backgroundColor: "#ffffff",
-    windowWidth: 1024,
-  });
-
-  const imgData = canvas.toDataURL("image/png");
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4",
-  });
-
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-  pdf.save(fileName);
+/**
+ * Client-side vector text PDF exporter.
+ * Generates selectable, searchable, ATS-parsable vector PDF.
+ */
+export async function exportToClientPdf(
+  content: ResumeContent,
+  themeConfig: ThemeConfig,
+  fileName = "Resume.pdf"
+): Promise<void> {
+  const docElement = React.createElement(ResumePdfDocument, { content, themeConfig });
+  const pdfInstance = pdf(docElement as unknown as Parameters<typeof pdf>[0]);
+  const blob = await pdfInstance.toBlob();
+  saveAs(blob, fileName);
 }
 
+/**
+ * Server-side / Node.js vector text PDF generator returning a Buffer.
+ * Used for testing and serverless endpoints.
+ */
+export async function generateTextPdfBuffer(
+  content: ResumeContent,
+  themeConfig?: ThemeConfig
+): Promise<Buffer> {
+  const docElement = React.createElement(ResumePdfDocument, { content, themeConfig });
+  const pdfInstance = pdf(docElement as unknown as Parameters<typeof pdf>[0]);
+  const stream = await pdfInstance.toBuffer();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream as AsyncIterable<Uint8Array | Buffer>) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
+/**
+ * Fallback to standard browser print dialog with @media print CSS styling.
+ */
 export function printResume(): void {
-  window.print();
+  if (typeof window !== "undefined") {
+    window.print();
+  }
 }

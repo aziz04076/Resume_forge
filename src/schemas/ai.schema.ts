@@ -59,6 +59,8 @@ export const CoverLetterResponseSchema = z.object({
   body: z.string(),
   tailoredPoints: z.array(z.string()),
   closing: z.string(),
+  companyInsights: z.array(z.string()).optional().default([]),
+  citedSources: z.array(z.string()).optional().default([]),
 });
 
 // 6. Mock Interview Coach Schema
@@ -84,6 +86,16 @@ export const InterviewAnswerEvaluationSchema = z.object({
   missingKeyConcepts: z.array(z.string()),
   improvedAnswerSuggestion: z.string(),
   generalFeedback: z.string(),
+  starScores: z
+    .object({
+      situation: z.number().min(0).max(25).default(20),
+      task: z.number().min(0).max(25).default(20),
+      action: z.number().min(0).max(25).default(20),
+      result: z.number().min(0).max(25).default(20),
+    })
+    .optional(),
+  fillerWordCount: z.number().optional().default(0),
+  fillerWordsDetected: z.array(z.string()).optional().default([]),
 });
 
 // 7. LinkedIn Profile Optimizer Schema

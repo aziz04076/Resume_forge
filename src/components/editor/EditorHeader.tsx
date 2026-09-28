@@ -49,7 +49,7 @@ export const EditorHeader: React.FC = () => {
     try {
       setIsExporting(true);
       toast.info("Generating pixel-perfect PDF...");
-      await exportToClientPdf("resume-preview-pane", `${title || "Resume"}.pdf`);
+      await exportToClientPdf(content, themeConfig, `${title || "Resume"}.pdf`);
       toast.success("PDF exported successfully!");
     } catch (err) {
       console.error(err);
