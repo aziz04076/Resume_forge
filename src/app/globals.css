@@ -119,7 +119,16 @@
     box-shadow: none !important;
     margin: 0 !important;
     width: 100% !important;
-    height: 100% !important;
-    page-break-after: always;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  .resume-paper section,
+  .resume-paper article,
+  .resume-paper header,
+  .resume-paper .break-inside-avoid,
+  .resume-paper li,
+  .resume-paper [data-section-item] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }

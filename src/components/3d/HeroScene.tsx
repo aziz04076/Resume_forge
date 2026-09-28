@@ -116,30 +116,37 @@ export const HeroScene: React.FC = () => {
 
     window.addEventListener("mousemove", onMouseMove);
 
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // 7. Animation Loop
     let animId: number;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
 
-      // Parallax smooth camera shift
-      camera.position.x += (mouseX * 4 - camera.position.x) * 0.05;
-      camera.position.y += (-mouseY * 4 - camera.position.y) * 0.05;
-      camera.lookAt(scene.position);
+      if (!prefersReducedMotion) {
+        const elapsedTime = clock.getElapsedTime();
 
-      // Gentle floating animation
-      centerSheet.position.y = Math.sin(elapsedTime * 1.2) * 0.12;
-      centerSheet.rotation.z = Math.sin(elapsedTime * 0.8) * 0.02;
+        // Parallax smooth camera shift
+        camera.position.x += (mouseX * 4 - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY * 4 - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
 
-      leftSheet.position.y = -0.3 + Math.sin(elapsedTime * 1.5 + 1) * 0.15;
-      leftSheet.rotation.z = Math.cos(elapsedTime * 1.0) * 0.03;
+        // Gentle floating animation
+        centerSheet.position.y = Math.sin(elapsedTime * 1.2) * 0.12;
+        centerSheet.rotation.z = Math.sin(elapsedTime * 0.8) * 0.02;
 
-      rightSheet.position.y = 0.4 + Math.sin(elapsedTime * 1.3 + 2) * 0.14;
-      rightSheet.rotation.z = Math.sin(elapsedTime * 1.1) * 0.03;
+        leftSheet.position.y = -0.3 + Math.sin(elapsedTime * 1.5 + 1) * 0.15;
+        leftSheet.rotation.z = Math.cos(elapsedTime * 1.0) * 0.03;
 
-      particles.rotation.y = elapsedTime * 0.02;
+        rightSheet.position.y = 0.4 + Math.sin(elapsedTime * 1.3 + 2) * 0.14;
+        rightSheet.rotation.z = Math.sin(elapsedTime * 1.1) * 0.03;
+
+        particles.rotation.y = elapsedTime * 0.02;
+      }
 
       renderer.render(scene, camera);
     };
@@ -161,11 +168,24 @@ export const HeroScene: React.FC = () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize", handleResize);
+
+      // Deep WebGL resource disposal
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.Points) {
+          object.geometry?.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach((mat) => mat.dispose());
+          } else {
+            object.material?.dispose();
+          }
+        }
+      });
+
       if (currentMount && renderer.domElement) {
         currentMount.removeChild(renderer.domElement);
       }
-      geometry.dispose();
       renderer.dispose();
+      renderer.forceContextLoss();
     };
   }, []);
 

@@ -16,26 +16,51 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
   const [isLoadingTexture, setIsLoadingTexture] = useState<boolean>(true);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
 
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const meshRef = useRef<THREE.Mesh | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const [hasWebGL, setHasWebGL] = useState<boolean>(true);
+  const autoRotateRef = useRef<boolean>(true);
+
+  // Sync autoRotate state to ref
+  useEffect(() => {
+    autoRotateRef.current = autoRotate;
+  }, [autoRotate]);
 
   useEffect(() => {
+    // Reduced motion preference
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      setAutoRotate(false);
+      autoRotateRef.current = false;
+    }
+
     const currentMount = mountRef.current;
     if (!currentMount) return;
+
+    // Check WebGL availability
+    try {
+      const testCanvas = document.createElement("canvas");
+      const gl = testCanvas.getContext("webgl") || testCanvas.getContext("experimental-webgl");
+      if (!gl) {
+        setHasWebGL(false);
+        setIsLoadingTexture(false);
+        return;
+      }
+    } catch {
+      setHasWebGL(false);
+      setIsLoadingTexture(false);
+      return;
+    }
 
     const width = currentMount.clientWidth || 800;
     const height = currentMount.clientHeight || 600;
 
     // 1. Scene
     const scene = new THREE.Scene();
-    sceneRef.current = scene;
 
     // 2. Camera
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     camera.position.set(0, 0, 5.5);
-    cameraRef.current = camera;
 
     // 3. Renderer with antialiasing and shadow support
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -43,7 +68,6 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    rendererRef.current = renderer;
 
     currentMount.appendChild(renderer.domElement);
 
@@ -98,7 +122,8 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     scene.add(mesh);
-    meshRef.current = mesh;
+
+    let capturedTexture: THREE.CanvasTexture | null = null;
 
     // Capture DOM element into high-res texture
     const captureResumeTexture = async () => {
@@ -116,13 +141,13 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
           backgroundColor: "#ffffff",
         });
 
-        const texture = new THREE.CanvasTexture(canvas);
-        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
+        capturedTexture = new THREE.CanvasTexture(canvas);
+        capturedTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        capturedTexture.minFilter = THREE.LinearFilter;
+        capturedTexture.magFilter = THREE.LinearFilter;
 
         const frontMaterial = new THREE.MeshStandardMaterial({
-          map: texture,
+          map: capturedTexture,
           roughness: 0.2,
           metalness: 0.05,
         });
@@ -179,7 +204,7 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
       animationFrameId = requestAnimationFrame(animate);
 
       if (mesh) {
-        if (!isDragging && autoRotate) {
+        if (!isDragging && autoRotateRef.current) {
           targetRotationY += 0.005;
         }
 
@@ -187,11 +212,15 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
         mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.08;
         mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.08;
 
-        // Floating hover effect
-        mesh.position.y = Math.sin(Date.now() * 0.002) * 0.06;
+        if (!prefersReducedMotion) {
+          // Floating hover effect
+          mesh.position.y = Math.sin(Date.now() * 0.002) * 0.06;
+        }
       }
 
-      particleSystem.rotation.y += 0.0008;
+      if (!prefersReducedMotion) {
+        particleSystem.rotation.y += 0.0008;
+      }
 
       renderer.render(scene, camera);
     };
@@ -218,14 +247,46 @@ export const ResumeOrbit3D: React.FC<ResumeOrbit3DProps> = ({
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
 
+      // Deep WebGL cleanup
+      if (capturedTexture) {
+        capturedTexture.dispose();
+      }
+
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh || obj instanceof THREE.Points) {
+          obj.geometry?.dispose();
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose());
+          } else {
+            obj.material?.dispose();
+          }
+        }
+      });
+
       if (currentMount && renderer.domElement) {
         currentMount.removeChild(renderer.domElement);
       }
-      geometry.dispose();
-      particleGeometry.dispose();
       renderer.dispose();
+      renderer.forceContextLoss();
     };
-  }, [elementId, autoRotate]);
+  }, [elementId]);
+
+  if (!hasWebGL) {
+    return (
+      <div className="w-full h-full relative flex flex-col items-center justify-center bg-slate-950 p-8 text-center space-y-4">
+        <div className="w-64 h-88 bg-gradient-to-tr from-slate-900 to-indigo-950/60 border border-slate-700 rounded-xl shadow-2xl p-6 flex flex-col justify-between transform rotate-2">
+          <div className="space-y-2 text-left">
+            <div className="w-24 h-4 bg-indigo-500/40 rounded" />
+            <div className="w-40 h-3 bg-slate-700 rounded" />
+            <div className="w-32 h-2.5 bg-slate-800 rounded mt-4" />
+          </div>
+          <div className="text-[11px] text-slate-400">
+            WebGL acceleration not detected or disabled. Displaying high-fidelity standard preview.
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full relative flex flex-col items-center justify-center bg-radial-gradient from-slate-900 to-slate-950 overflow-hidden">
