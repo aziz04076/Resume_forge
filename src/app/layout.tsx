@@ -25,8 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jetbrains.variable} font-sans bg-slate-950 text-white antialiased`}>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${jetbrains.variable} font-sans bg-slate-950 text-white antialiased`}
+        suppressHydrationWarning
+      >
         {children}
         <Toaster position="bottom-right" richColors theme="dark" />
       </body>
