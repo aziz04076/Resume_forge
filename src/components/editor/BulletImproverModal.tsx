@@ -12,6 +12,7 @@ interface BulletImproverModalProps {
   experienceId?: string;
   bulletIndex?: number;
   initialBullet?: string;
+  onApply?: (bullet: string) => void;
 }
 
 export const BulletImproverModal: React.FC<BulletImproverModalProps> = ({
@@ -20,12 +21,20 @@ export const BulletImproverModal: React.FC<BulletImproverModalProps> = ({
   experienceId,
   bulletIndex,
   initialBullet = "",
+  onApply,
 }) => {
   const { content, updateWorkExperience, targetRole } = useResumeStore();
 
   const [inputBullet, setInputBullet] = useState<string>(initialBullet);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [result, setResult] = useState<BulletImproverResponse | null>(null);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setInputBullet(initialBullet || "");
+      setResult(null);
+    }
+  }, [isOpen, initialBullet]);
 
   if (!isOpen) return null;
 
@@ -62,7 +71,9 @@ export const BulletImproverModal: React.FC<BulletImproverModalProps> = ({
   };
 
   const handleApply = (improvedBullet: string) => {
-    if (experienceId !== undefined && bulletIndex !== undefined) {
+    if (onApply) {
+      onApply(improvedBullet);
+    } else if (experienceId !== undefined && bulletIndex !== undefined) {
       const exp = content.workExperience.find((e) => e.id === experienceId);
       if (exp) {
         const nextBullets = [...exp.bullets];

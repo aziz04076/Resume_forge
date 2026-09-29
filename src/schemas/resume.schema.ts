@@ -1,15 +1,31 @@
 import { z } from "zod";
 
+export const SocialLinkSchema = z.object({
+  id: z.string(),
+  platform: z.string().default(""),
+  url: z.string().default(""),
+  showFullUrl: z.boolean().default(false),
+});
+
 export const PersonalInfoSchema = z.object({
   fullName: z.string().default(""),
   email: z.string().email().or(z.literal("")).default(""),
   phone: z.string().default(""),
   location: z.string().default(""),
   jobTitle: z.string().default(""),
-  website: z.string().url().or(z.literal("")).default(""),
+  website: z.string().default(""),
   linkedin: z.string().default(""),
   github: z.string().default(""),
-  photoUrl: z.string().optional().default(""),
+  portfolioUrl: z.string().optional(),
+  behance: z.string().optional(),
+  dribbble: z.string().optional(),
+  x: z.string().optional(),
+  socialLinks: z.array(SocialLinkSchema).optional(),
+  showFullUrlAsText: z.boolean().optional(),
+  photoUrl: z.string().optional(),
+  showPhoto: z.boolean().optional(),
+  photoShape: z.enum(["circle", "square", "rounded"]).optional(),
+  photoSize: z.enum(["small", "medium", "large"]).optional(),
   summary: z.string().default(""),
 });
 
@@ -71,6 +87,46 @@ export const LanguageItemSchema = z.object({
   proficiency: z.string().default("Fluent"), // Native, Fluent, Professional, Intermediate, Elementary
 });
 
+export const CourseItemSchema = z.object({
+  id: z.string(),
+  name: z.string().default(""),
+  institution: z.string().default(""),
+  date: z.string().default(""),
+});
+
+export const PublicationItemSchema = z.object({
+  id: z.string(),
+  title: z.string().default(""),
+  publisher: z.string().default(""),
+  date: z.string().default(""),
+  url: z.string().default(""),
+  description: z.string().default(""),
+});
+
+export const VolunteeringItemSchema = z.object({
+  id: z.string(),
+  role: z.string().default(""),
+  organization: z.string().default(""),
+  period: z.string().default(""),
+  bullets: z.array(z.string()).default([]),
+});
+
+export const AwardItemSchema = z.object({
+  id: z.string(),
+  title: z.string().default(""),
+  issuer: z.string().default(""),
+  date: z.string().default(""),
+  description: z.string().default(""),
+});
+
+export const ReferenceItemSchema = z.object({
+  id: z.string(),
+  name: z.string().default(""),
+  role: z.string().default(""),
+  organization: z.string().default(""),
+  contact: z.string().default(""),
+});
+
 export const CustomSectionItemSchema = z.object({
   id: z.string(),
   title: z.string().default(""),
@@ -89,10 +145,16 @@ export const CustomSectionSchema = z.object({
 export const ResumeContentSchema = z.object({
   personalInfo: PersonalInfoSchema,
   workExperience: z.array(WorkExperienceItemSchema).default([]),
+  internships: z.array(WorkExperienceItemSchema).default([]),
   education: z.array(EducationItemSchema).default([]),
   skills: z.array(SkillCategorySchema).default([]),
   projects: z.array(ProjectItemSchema).default([]),
   certifications: z.array(CertificationItemSchema).default([]),
+  courses: z.array(CourseItemSchema).default([]),
+  publications: z.array(PublicationItemSchema).default([]),
+  volunteering: z.array(VolunteeringItemSchema).default([]),
+  awards: z.array(AwardItemSchema).default([]),
+  references: z.array(ReferenceItemSchema).default([]),
   languages: z.array(LanguageItemSchema).default([]),
   customSections: z.array(CustomSectionSchema).default([]),
 });
@@ -106,13 +168,22 @@ export const ThemeConfigSchema = z.object({
   fontSize: z.enum(["small", "medium", "large"]).default("medium"),
   lineSpacing: z.enum(["compact", "normal", "spacious"]).default("normal"),
   pageMargins: z.enum(["compact", "normal", "spacious"]).default("normal"),
+  pageSize: z.enum(["a4", "letter"]).default("a4"),
+  showCreatedWithBadge: z.boolean().default(true),
+  fitToPages: z.enum(["auto", "1", "2"]).default("auto"),
   sectionOrder: z.array(z.string()).default([
     "summary",
     "workExperience",
+    "internships",
     "education",
     "skills",
     "projects",
     "certifications",
+    "courses",
+    "publications",
+    "volunteering",
+    "awards",
+    "references",
     "languages",
     "customSections",
   ]),
@@ -133,11 +204,17 @@ export const FullResumeSchema = z.object({
 });
 
 export type PersonalInfo = z.infer<typeof PersonalInfoSchema>;
+export type SocialLink = z.infer<typeof SocialLinkSchema>;
 export type WorkExperienceItem = z.infer<typeof WorkExperienceItemSchema>;
 export type EducationItem = z.infer<typeof EducationItemSchema>;
 export type SkillCategory = z.infer<typeof SkillCategorySchema>;
 export type ProjectItem = z.infer<typeof ProjectItemSchema>;
 export type CertificationItem = z.infer<typeof CertificationItemSchema>;
+export type CourseItem = z.infer<typeof CourseItemSchema>;
+export type PublicationItem = z.infer<typeof PublicationItemSchema>;
+export type VolunteeringItem = z.infer<typeof VolunteeringItemSchema>;
+export type AwardItem = z.infer<typeof AwardItemSchema>;
+export type ReferenceItem = z.infer<typeof ReferenceItemSchema>;
 export type LanguageItem = z.infer<typeof LanguageItemSchema>;
 export type CustomSectionItem = z.infer<typeof CustomSectionItemSchema>;
 export type CustomSection = z.infer<typeof CustomSectionSchema>;
@@ -155,7 +232,16 @@ export const DEFAULT_RESUME_CONTENT: ResumeContent = {
     website: "https://alexmorgan.dev",
     linkedin: "linkedin.com/in/alexmorgan",
     github: "github.com/alexmorgan",
+    portfolioUrl: "",
+    behance: "",
+    dribbble: "",
+    x: "",
+    socialLinks: [],
+    showFullUrlAsText: false,
     photoUrl: "",
+    showPhoto: false,
+    photoShape: "circle",
+    photoSize: "medium",
     summary:
       "Results-oriented Senior Full-Stack Engineer with 6+ years of experience architecting high-concurrency cloud distributed platforms, leading engineering pods, and optimizing enterprise web performance.",
   },
@@ -252,6 +338,12 @@ export const DEFAULT_RESUME_CONTENT: ResumeContent = {
     { id: "lang-1", language: "English", proficiency: "Native / Bilingual" },
     { id: "lang-2", language: "Spanish", proficiency: "Professional Working" },
   ],
+  internships: [],
+  courses: [],
+  publications: [],
+  volunteering: [],
+  awards: [],
+  references: [],
   customSections: [],
 };
 
@@ -264,13 +356,22 @@ export const DEFAULT_THEME_CONFIG: ThemeConfig = {
   fontSize: "medium",
   lineSpacing: "normal",
   pageMargins: "normal",
+  pageSize: "a4",
+  showCreatedWithBadge: true,
+  fitToPages: "auto",
   sectionOrder: [
     "summary",
     "workExperience",
+    "internships",
     "education",
     "skills",
     "projects",
     "certifications",
+    "courses",
+    "publications",
+    "volunteering",
+    "awards",
+    "references",
     "languages",
     "customSections",
   ],

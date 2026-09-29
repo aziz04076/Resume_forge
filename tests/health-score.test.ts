@@ -12,7 +12,9 @@ describe("Resume Health & ATS Scoring Engine", () => {
 
   it("should penalize empty contact information and empty summaries", () => {
     const emptyResume: ResumeContent = {
+      ...DEFAULT_RESUME_CONTENT,
       personalInfo: {
+        ...DEFAULT_RESUME_CONTENT.personalInfo,
         fullName: "",
         email: "",
         phone: "",
@@ -25,10 +27,16 @@ describe("Resume Health & ATS Scoring Engine", () => {
         summary: "",
       },
       workExperience: [],
+      internships: [],
       education: [],
       skills: [],
       projects: [],
       certifications: [],
+      courses: [],
+      publications: [],
+      volunteering: [],
+      awards: [],
+      references: [],
       languages: [],
       customSections: [],
     };

@@ -13,6 +13,8 @@ import { TranslateModal } from "./TranslateModal";
 import { ShareModal } from "./ShareModal";
 import { CommandPalette } from "./CommandPalette";
 import { OnboardingTourModal } from "./OnboardingTourModal";
+import { OnboardingFieldModal } from "./OnboardingFieldModal";
+import { Logo } from "@/components/brand/Logo";
 import {
   Undo2,
   Redo2,
@@ -60,6 +62,7 @@ export const EditorHeader: React.FC = () => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [isFieldModalOpen, setIsFieldModalOpen] = useState(false);
 
   // Global keyboard shortcuts (Ctrl+K, Ctrl+Z, Ctrl+Y)
   useEffect(() => {
@@ -124,13 +127,8 @@ export const EditorHeader: React.FC = () => {
       <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-4 flex items-center justify-between z-30 sticky top-0">
         {/* Left: Brand / Title / Target Role */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 pr-2 border-r border-slate-800">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">
-              RF
-            </div>
-            <span className="font-bold text-sm tracking-tight text-white hidden md:inline">
-              Resume<span className="text-indigo-400">Forge</span>
-            </span>
+          <div className="pr-3 border-r border-slate-800">
+            <Logo href="/" size="sm" />
           </div>
 
           {/* Editable Title */}
@@ -253,6 +251,15 @@ export const EditorHeader: React.FC = () => {
               title="Translate to Hindi / Global Languages"
             >
               <Languages className="w-3.5 h-3.5" />
+            </button>
+
+            <button
+              onClick={() => setIsFieldModalOpen(true)}
+              className="px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-colors flex items-center gap-1.5 text-xs font-medium"
+              title="Select your industry or load a realistic sample resume"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Field Presets</span>
             </button>
           </div>
         </div>
@@ -436,6 +443,10 @@ export const EditorHeader: React.FC = () => {
       />
 
       <OnboardingTourModal />
+      <OnboardingFieldModal
+        isOpen={isFieldModalOpen}
+        onClose={() => setIsFieldModalOpen(false)}
+      />
     </>
   );
 };

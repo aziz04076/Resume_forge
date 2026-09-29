@@ -1,0 +1,555 @@
+{
+  "contrastViolations": [],
+  "axeResults": [
+    {
+      "theme": "dark",
+      "width": 360,
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodesCount": 28,
+          "nodes": [
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start My Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Build My Resume Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>See Examples for My Field</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use This Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start Building in 2 Minutes</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Explore all 28 professional templates</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Get Started Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodesCount": 28,
+          "nodes": [
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start My Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Build My Resume Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>See Examples for My Field</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use This Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start Building in 2 Minutes</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Explore all 28 professional templates</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Get Started Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1280,
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodesCount": 28,
+          "nodes": [
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start My Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Build My Resume Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>See Examples for My Field</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use This Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start Building in 2 Minutes</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Explore all 28 professional templates</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Get Started Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodesCount": 28,
+          "nodes": [
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start My Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Build My Resume Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>See Examples for My Field</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use This Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Start Building in 2 Minutes</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Use Template</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Explore all 28 professional templates</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span>Get Started Free</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-semibold text-slate-900 dark:text-white transition-colors\">Resume</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<span class=\"font-extrabold text-indigo-600 dark:text-indigo-400\">Forge</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "html": "<a class=\"hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:und",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "samples": {
+    "dark": {
+      "mobile": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "tablet": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "desktop": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "wide": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      }
+    },
+    "light": {
+      "mobile": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "tablet": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "desktop": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      },
+      "wide": {
+        "total": 215,
+        "failsCount": 0,
+        "fails": []
+      }
+    }
+  }
+}

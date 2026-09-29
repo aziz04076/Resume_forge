@@ -6,7 +6,10 @@ import {
   getLineSpacingClass,
   getMarginPaddingClass,
 } from "./templateUtils";
-import { Mail, Phone, MapPin, Globe, Linkedin, Github, ExternalLink, Code2 } from "lucide-react";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
+import { ExternalLink, Code2 } from "lucide-react";
 
 export const TechModern: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, projects, certifications } =
@@ -25,77 +28,24 @@ export const TechModern: React.FC<TemplateProps> = ({ content, themeConfig, clas
     <div className={`resume-paper ${fontClass} ${paddingClass} ${className} text-slate-800`}>
       {/* Tech Header */}
       <header className="border-b-2 pb-4 mb-4" style={{ borderColor: accentColor }}>
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className={`${sizeClasses.name} tracking-tight font-extrabold`} style={{ color: primaryColor }}>
-              {personalInfo.fullName || "Your Full Name"}
-            </h1>
-            {personalInfo.jobTitle && (
-              <p
-                className="text-xs font-mono font-semibold tracking-wide mt-0.5 uppercase"
-                style={{ color: accentColor }}
-              >
-                {"//"} {personalInfo.jobTitle}
-              </p>
-            )}
-          </div>
-          <div className="text-right flex flex-col items-end gap-1 text-[11px] text-slate-600 font-mono">
-            {personalInfo.email && (
-              <span className="flex items-center gap-1">
-                <Mail className="w-3 h-3 text-slate-400" />
-                <a href={`mailto:${personalInfo.email}`} className="hover:underline">
-                  {personalInfo.email}
-                </a>
-              </span>
-            )}
-            {personalInfo.phone && (
-              <span className="flex items-center gap-1">
-                <Phone className="w-3 h-3 text-slate-400" />
-                {personalInfo.phone}
-              </span>
-            )}
-            {personalInfo.location && (
-              <span className="flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-slate-400" />
-                {personalInfo.location}
-              </span>
-            )}
-            <div className="flex gap-2.5 mt-0.5">
-              {personalInfo.github && (
-                <a
-                  href={`https://${personalInfo.github}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1 text-slate-700 hover:text-blue-600 font-medium"
+        <div className="flex justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <TemplateAvatar personalInfo={personalInfo} />
+            <div>
+              <h1 className={`${sizeClasses.name} tracking-tight font-extrabold`} style={{ color: primaryColor }}>
+                {personalInfo.fullName || "Your Full Name"}
+              </h1>
+              {personalInfo.jobTitle && (
+                <p
+                  className="text-xs font-mono font-semibold tracking-wide mt-0.5 uppercase"
+                  style={{ color: accentColor }}
                 >
-                  <Github className="w-3 h-3" />
-                  <span>GitHub</span>
-                </a>
-              )}
-              {personalInfo.linkedin && (
-                <a
-                  href={`https://${personalInfo.linkedin}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1 text-slate-700 hover:text-blue-600 font-medium"
-                >
-                  <Linkedin className="w-3 h-3" />
-                  <span>LinkedIn</span>
-                </a>
-              )}
-              {personalInfo.website && (
-                <a
-                  href={personalInfo.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1 text-slate-700 hover:text-blue-600 font-medium"
-                >
-                  <Globe className="w-3 h-3" />
-                  <span>Portfolio</span>
-                </a>
+                  {"//"} {personalInfo.jobTitle}
+                </p>
               )}
             </div>
           </div>
+          <TemplateContactLinks personalInfo={personalInfo} variant="stacked" className="text-right font-mono" />
         </div>
       </header>
 
@@ -295,6 +245,9 @@ export const TechModern: React.FC<TemplateProps> = ({ content, themeConfig, clas
               </div>
             </section>
           )}
+
+          {/* Extra Multi-Entry Sections */}
+          <TemplateExtraSections content={content} themeConfig={themeConfig} />
         </div>
       </div>
     </div>

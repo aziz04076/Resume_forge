@@ -6,7 +6,9 @@ import {
   getLineSpacingClass,
   getMarginPaddingClass,
 } from "./templateUtils";
-import { Mail, Phone, MapPin, Globe, Linkedin, Github } from "lucide-react";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
 
 export const MinimalATS: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, projects, certifications, languages, customSections } =
@@ -27,62 +29,22 @@ export const MinimalATS: React.FC<TemplateProps> = ({ content, themeConfig, clas
       style={{ color: primaryColor }}
     >
       {/* Header */}
-      <header className="border-b pb-4 mb-4" style={{ borderColor: primaryColor + "33" }}>
-        <h1 className={`${sizeClasses.name} uppercase tracking-wider mb-1`} style={{ color: primaryColor }}>
-          {personalInfo.fullName || "Your Full Name"}
-        </h1>
-        {personalInfo.jobTitle && (
-          <p className={`${sizeClasses.role} font-medium mb-2`} style={{ color: accentColor }}>
-            {personalInfo.jobTitle}
-          </p>
-        )}
-
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-600 text-[11px]">
-          {personalInfo.email && (
-            <span className="flex items-center gap-1">
-              <Mail className="w-3 h-3 text-slate-400" />
-              <a href={`mailto:${personalInfo.email}`} className="hover:underline">
-                {personalInfo.email}
-              </a>
-            </span>
+      <header
+        className="border-b pb-4 mb-4 flex items-center justify-between gap-4"
+        style={{ borderColor: primaryColor + "33" }}
+      >
+        <div className="flex-1">
+          <h1 className={`${sizeClasses.name} uppercase tracking-wider mb-1`} style={{ color: primaryColor }}>
+            {personalInfo.fullName || "Your Full Name"}
+          </h1>
+          {personalInfo.jobTitle && (
+            <p className={`${sizeClasses.role} font-medium mb-2`} style={{ color: accentColor }}>
+              {personalInfo.jobTitle}
+            </p>
           )}
-          {personalInfo.phone && (
-            <span className="flex items-center gap-1">
-              <Phone className="w-3 h-3 text-slate-400" />
-              {personalInfo.phone}
-            </span>
-          )}
-          {personalInfo.location && (
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-slate-400" />
-              {personalInfo.location}
-            </span>
-          )}
-          {personalInfo.website && (
-            <span className="flex items-center gap-1">
-              <Globe className="w-3 h-3 text-slate-400" />
-              <a href={personalInfo.website} target="_blank" rel="noreferrer" className="hover:underline">
-                {personalInfo.website.replace(/^https?:\/\//, "")}
-              </a>
-            </span>
-          )}
-          {personalInfo.linkedin && (
-            <span className="flex items-center gap-1">
-              <Linkedin className="w-3 h-3 text-slate-400" />
-              <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="hover:underline">
-                {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
-              </a>
-            </span>
-          )}
-          {personalInfo.github && (
-            <span className="flex items-center gap-1">
-              <Github className="w-3 h-3 text-slate-400" />
-              <a href={`https://${personalInfo.github}`} target="_blank" rel="noreferrer" className="hover:underline">
-                {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
-              </a>
-            </span>
-          )}
+          <TemplateContactLinks personalInfo={personalInfo} />
         </div>
+        <TemplateAvatar personalInfo={personalInfo} />
       </header>
 
       <div className={spacingClass}>
@@ -334,6 +296,9 @@ export const MinimalATS: React.FC<TemplateProps> = ({ content, themeConfig, clas
               </div>
             </section>
           ))}
+
+        {/* Extra Multi-Entry Sections */}
+        <TemplateExtraSections content={content} themeConfig={themeConfig} />
       </div>
     </div>
   );

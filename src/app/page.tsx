@@ -1,189 +1,250 @@
 import Link from "next/link";
 import { HeroScene } from "@/components/3d/HeroScene";
-import { Sparkles, ArrowRight, Zap, Mic, Layers } from "lucide-react";
+import { Logo } from "@/components/brand/Logo";
+import { BRAND } from "@/lib/brand/tokens";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { ProfessionSelectorSection } from "@/components/landing/ProfessionSelectorSection";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { FeaturesBenefitGrid } from "@/components/landing/FeaturesBenefitGrid";
+import { TemplatePreviewStrip } from "@/components/landing/TemplatePreviewStrip";
+import { HonestFAQSection } from "@/components/landing/HonestFAQSection";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Lock,
+  Sparkles,
+  Users
+} from "lucide-react";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden">
-      {/* 1. Header Navigation */}
-      <nav className="fixed top-0 left-0 right-0 h-16 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl z-50 px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">
-            RF
-          </div>
-          <span className="font-extrabold text-base tracking-tight">
-            Resume<span className="text-indigo-400">Forge</span>
-          </span>
-          <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            Career Copilot v2.0
-          </span>
-        </div>
-
-        <div className="hidden md:flex items-center gap-6 text-xs text-slate-300 font-medium">
-          <Link href="/editor" className="hover:text-white transition-colors">
-            Resume Builder
-          </Link>
-          <Link href="/templates" className="hover:text-white transition-colors">
-            28 Templates
-          </Link>
-          <Link href="/ats-scanner" className="hover:text-white transition-colors">
-            ATS Scanner
-          </Link>
-          <Link href="/interview" className="hover:text-white transition-colors">
-            Interview Coach
-          </Link>
-          <Link href="/applications" className="hover:text-white transition-colors">
-            Job Tracker
-          </Link>
-        </div>
-
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden transition-colors duration-200">
+      {/* 1. Brand Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 h-16 border-b border-slate-200/90 dark:border-slate-800/80 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl z-50 px-4 sm:px-6 flex items-center justify-between transition-colors">
         <div className="flex items-center gap-3">
+          <Logo href="/" size="md" />
+          <span className="hidden sm:inline-block ml-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800">
+            For Every Profession
+          </span>
+        </div>
+
+        <div className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700 dark:text-slate-200">
+          <Link
+            href="#who-is-it-for"
+            className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+          >
+            Who It&apos;s For
+          </Link>
+          <Link
+            href="#how-it-works"
+            className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+          >
+            How It Works
+          </Link>
+          <Link
+            href="#features"
+            className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+          >
+            Features
+          </Link>
+          <Link
+            href="#templates"
+            className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+          >
+            Templates
+          </Link>
+          <Link
+            href="#faq"
+            className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+          >
+            FAQ
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <ThemeToggle />
           <Link
             href="/editor"
-            className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 transition-all"
+            className="flex items-center gap-1.5 min-h-[44px] px-4 sm:px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-indigo-600/25 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
           >
-            <span>Launch Studio</span>
+            <span>Start My Resume</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </nav>
 
-      {/* 2. Hero Section with Interactive 3D Canvas */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 px-6 flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
-        {/* 3D Background Canvas */}
-        <HeroScene />
+      {/* 2. Universal Human Hero Section — 3D scene fills the full hero */}
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 px-4 sm:px-6 flex flex-col items-center justify-center min-h-[92vh] overflow-hidden">
 
-        {/* Ambient Radial Gradient Glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-indigo-600/20 via-purple-600/15 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+        {/* ─── LAYER 0: Animated gradient background ─── */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 0 }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-indigo-50/60 to-purple-50/40 dark:from-slate-950 dark:via-indigo-950/70 dark:to-purple-950/50 transition-colors duration-500" />
+          <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-indigo-400/15 dark:bg-indigo-600/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-[-5%] right-[15%] w-[500px] h-[400px] bg-amber-400/8 dark:bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/3 left-[-5%] w-[400px] h-[500px] bg-blue-400/8 dark:bg-blue-600/12 rounded-full blur-3xl" />
+        </div>
 
-        {/* Floating Hero Content */}
-        <div className="relative z-10 max-w-4xl text-center flex flex-col items-center pointer-events-none">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 text-indigo-300 text-xs font-medium mb-6 shadow-xl backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            <span>The Autonomous Career Copilot — Not Just a Resume Builder</span>
+        {/* ─── LAYER 1: Three.js 3D canvas ─── */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none select-none"
+          style={{ zIndex: 1 }}
+        >
+          <HeroScene />
+        </div>
+
+        {/* ─── LAYER 2: Centre text — narrow scrims only behind text blocks ─── */}
+        <div
+          className="relative max-w-2xl w-full text-center flex flex-col items-center"
+          style={{ zIndex: 2 }}
+        >
+          {/* Tagline pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-600/90 dark:bg-indigo-600/80 text-white text-xs sm:text-sm font-semibold mb-6 shadow-lg backdrop-blur-sm border border-indigo-500/60">
+            <Sparkles className="w-3.5 h-3.5 shrink-0" />
+            <span>The Modern Career Copilot for Every Field</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6 drop-shadow-md">
-            Engineer your dream career with{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">
-              real AI precision
-            </span>
+          {/* Main Headline — text-shadow gives contrast on any background */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] mb-5 px-2 text-slate-900 dark:text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.12)] dark:[text-shadow:0_2px_20px_rgba(0,0,0,0.7)]">
+            Build a resume that{" "}
+            <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">
+              opens doors
+            </span>{" "}
+            in any field.
           </h1>
 
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 drop-shadow">
-            Split-screen live editor, 28 ATS-engineered templates, quantifiable STAR bullet optimization,
-            voice-assisted mock interviews, and automated job tracking in one unified platform.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto pointer-events-auto">
-            <Link
-              href="/editor"
-              className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-semibold shadow-xl shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95"
-            >
-              <span>Build My Resume Now</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/editor"
-              className="w-full sm:w-auto px-6 py-3.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-200 rounded-xl text-sm font-semibold backdrop-blur-md flex items-center justify-center gap-2 transition-all hover:text-white"
-            >
-              <span>Browse 28 Templates</span>
-            </Link>
-          </div>
-
-          {/* Proof Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-16 text-center">
-            <div className="p-3 bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-white">99.4%</div>
-              <div className="text-[11px] text-slate-400 mt-0.5">ATS Parse Rate</div>
-            </div>
-            <div className="p-3 bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-white">28</div>
-              <div className="text-[11px] text-slate-400 mt-0.5">Designer Templates</div>
-            </div>
-            <div className="p-3 bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-white">3.2x</div>
-              <div className="text-[11px] text-slate-400 mt-0.5">Interview Callback Rate</div>
-            </div>
-            <div className="p-3 bg-slate-900/60 backdrop-blur-md rounded-xl border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-emerald-400">100% Real</div>
-              <div className="text-[11px] text-slate-400 mt-0.5">Live Claude & OpenAI APIs</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Feature Pillars */}
-      <section className="py-24 px-6 border-t border-slate-800/80 bg-slate-950/40 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-xs uppercase font-mono font-bold tracking-widest text-indigo-400 mb-2">
-              Beyond Basic Builders
-            </h2>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              A Complete Career Operating System
-            </h3>
-            <p className="text-sm text-slate-400 mt-3 leading-relaxed">
-              Every tool required from drafting your first bullet to negotiating your final offer letter.
+          {/* Subtitle — frosted pill scrim, narrow and targeted */}
+          <div className="px-6 py-3 rounded-2xl bg-white/75 dark:bg-slate-950/65 backdrop-blur-md border border-white/60 dark:border-slate-800/50 shadow-md mb-8 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-800 dark:text-slate-100 leading-relaxed font-normal">
+              Whether you work in healthcare, teaching, sales, design, finance, trades, or tech—
+              ResumeForge turns your real work into results hiring managers notice.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-indigo-500/50 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Layers className="w-6 h-6" />
-              </div>
-              <h4 className="font-bold text-base text-white mb-2">Split-Screen Live Engine</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Edit structured forms on the left while viewing pixel-perfect rendering on the right with instant
-                zoom, font swaps, and color changes.
-              </p>
-            </div>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full">
+            <Link
+              href="/editor"
+              className="w-full sm:w-auto min-h-[52px] px-9 py-4 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-2xl text-base shadow-xl shadow-indigo-600/40 flex items-center justify-center gap-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              <span>Build My Resume Free</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="#who-is-it-for"
+              className="w-full sm:w-auto min-h-[52px] px-9 py-4 bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 border border-slate-300/80 dark:border-slate-700/80 text-slate-900 dark:text-slate-100 font-bold rounded-2xl text-base flex items-center justify-center gap-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 backdrop-blur-sm shadow-lg"
+            >
+              <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <span>See Examples for My Field</span>
+            </Link>
+          </div>
 
-            {/* Card 2 */}
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-purple-500/50 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Zap className="w-6 h-6" />
+          {/* Stat badges — semi-transparent, 3D still visible between them */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 w-full max-w-2xl text-center">
+            {[
+              { stat: "28 Designs", label: "Field-Specific Formats", color: "text-slate-900 dark:text-white" },
+              { stat: "100% Vector", label: "Selectable PDF & DOCX", color: "text-emerald-700 dark:text-emerald-400" },
+              { stat: "Photo Ready", label: "Optional Headshot Styles", color: "text-slate-900 dark:text-white" },
+              { stat: "Free to Start", label: "No Credit Card", color: "text-indigo-700 dark:text-indigo-300" },
+            ].map((b) => (
+              <div
+                key={b.stat}
+                className="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/75 border border-white/70 dark:border-slate-800/60 shadow-md backdrop-blur-sm"
+              >
+                <div className={`text-lg sm:text-xl font-extrabold ${b.color}`}>{b.stat}</div>
+                <div className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-0.5 leading-snug">{b.label}</div>
               </div>
-              <h4 className="font-bold text-base text-white mb-2">10 Real AI Career Engines</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                STAR/XYZ bullet rewrites, real-time Job Description keyword matching, automated ATS scanner,
-                and personalized cover letter generation with Claude 3.5 Sonnet.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-emerald-500/50 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Mic className="w-6 h-6" />
-              </div>
-              <h4 className="font-bold text-base text-white mb-2">Voice AI Mock Interviewer</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Practice role-specific interview questions generated directly from your resume and target JD.
-                Answers evaluated live via Web Speech API with concrete feedback.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Footer */}
-      <footer className="border-t border-slate-800/80 py-10 px-6 text-center text-xs text-slate-500">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-300">ResumeForge</span>
-            <span>• The Autonomous Career Copilot</span>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/editor" className="hover:text-slate-300 transition-colors">
-              Open Editor
+      {/* 3. "Who Is It For?" Interactive Profession Selector */}
+      <ProfessionSelectorSection />
+
+      {/* 4. "How It Works" 3 Simple Steps */}
+      <HowItWorksSection />
+
+      {/* 5. Features Grid in Plain Benefit Language */}
+      <FeaturesBenefitGrid />
+
+      {/* 6. Template Preview Strip (Photo & Non-Photo) */}
+      <TemplatePreviewStrip />
+
+      {/* 7. Honest FAQ (Privacy, Pricing, Data Deletion, Screening Software) */}
+      <HonestFAQSection />
+
+      {/* 8. Call to Action Strip */}
+      <section className="py-20 px-6 bg-slate-100 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800/80 text-center transition-colors">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight">
+            Ready to build a resume you feel confident sending?
+          </h2>
+          <p className="text-base sm:text-lg text-slate-700 dark:text-slate-200 leading-relaxed font-normal">
+            Join thousands of students, healthcare providers, educators, sales professionals, and engineers who trust ResumeForge.
+          </p>
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+            <Link
+              href="/editor"
+              className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-base font-bold shadow-lg shadow-indigo-600/25 flex items-center justify-center gap-2 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            >
+              <span>Get Started Free</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/templates" className="hover:text-slate-300 transition-colors">
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-700 dark:text-slate-300 font-medium pt-4">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Instant Download</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Zero Fake Content</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <span>Private & Secure</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Honest Brand Footer */}
+      <footer className="border-t border-slate-200 dark:border-slate-800/80 py-12 px-6 text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-950 transition-colors">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <Logo href="/" size="sm" showTagline={false} />
+            <p className="text-xs text-slate-700 dark:text-slate-300 max-w-sm leading-relaxed">
+              {BRAND.taglines.primary}
+            </p>
+            <div className="text-xs text-slate-600 dark:text-slate-400">
+              © {new Date().getFullYear()} ResumeForge. Template design & career engine. Candidates retain 100% copyright and ownership of their resume content.
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm font-medium">
+            <Link href="/editor" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+              Resume Editor
+            </Link>
+            <Link href="/templates" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
               Templates
             </Link>
-            <span className="text-emerald-400">Zero Mock Data Guarantee</span>
+            <Link href="/ats-scanner" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+              Screening Check
+            </Link>
+            <Link href="/interview" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+              Interview Coach
+            </Link>
+            <Link href="/applications" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+              Application Tracker
+            </Link>
+            <Link href="#faq" className="hover:text-indigo-600 dark:hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded">
+              Privacy & FAQ
+            </Link>
           </div>
         </div>
       </footer>

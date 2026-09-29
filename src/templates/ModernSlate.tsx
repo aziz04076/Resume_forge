@@ -6,7 +6,9 @@ import {
   getLineSpacingClass,
   getMarginPaddingClass,
 } from "./templateUtils";
-import { Mail, Phone, MapPin, Globe, Linkedin, Github } from "lucide-react";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
 
 export const ModernSlate: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, projects } = content;
@@ -24,60 +26,21 @@ export const ModernSlate: React.FC<TemplateProps> = ({ content, themeConfig, cla
     <div className={`resume-paper ${fontClass} ${paddingClass} ${className} text-slate-800`}>
       {/* Modern Banner Header */}
       <header className="bg-slate-50 -mx-9 -mt-9 p-8 mb-6 border-b border-slate-200">
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className={`${sizeClasses.name} tracking-tight font-extrabold`} style={{ color: primaryColor }}>
-              {personalInfo.fullName || "Your Full Name"}
-            </h1>
-            {personalInfo.jobTitle && (
-              <p className="text-sm font-semibold mt-1" style={{ color: accentColor }}>
-                {personalInfo.jobTitle}
-              </p>
-            )}
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex items-center gap-4">
+            <TemplateAvatar personalInfo={personalInfo} />
+            <div>
+              <h1 className={`${sizeClasses.name} tracking-tight font-extrabold`} style={{ color: primaryColor }}>
+                {personalInfo.fullName || "Your Full Name"}
+              </h1>
+              {personalInfo.jobTitle && (
+                <p className="text-sm font-semibold mt-1" style={{ color: accentColor }}>
+                  {personalInfo.jobTitle}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="text-right text-[11px] text-slate-600 space-y-1">
-            {personalInfo.email && (
-              <div className="flex items-center justify-end gap-1.5">
-                <a href={`mailto:${personalInfo.email}`} className="hover:underline">
-                  {personalInfo.email}
-                </a>
-                <Mail className="w-3 h-3 text-slate-400" />
-              </div>
-            )}
-            {personalInfo.phone && (
-              <div className="flex items-center justify-end gap-1.5">
-                <span>{personalInfo.phone}</span>
-                <Phone className="w-3 h-3 text-slate-400" />
-              </div>
-            )}
-            {personalInfo.location && (
-              <div className="flex items-center justify-end gap-1.5">
-                <span>{personalInfo.location}</span>
-                <MapPin className="w-3 h-3 text-slate-400" />
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex gap-4 mt-3 pt-3 border-t border-slate-200 text-[11px] text-slate-600">
-          {personalInfo.linkedin && (
-            <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-blue-600">
-              <Linkedin className="w-3 h-3" />
-              <span>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
-            </a>
-          )}
-          {personalInfo.github && (
-            <a href={`https://${personalInfo.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-slate-900">
-              <Github className="w-3 h-3" />
-              <span>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
-            </a>
-          )}
-          {personalInfo.website && (
-            <a href={personalInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-blue-600">
-              <Globe className="w-3 h-3" />
-              <span>{personalInfo.website.replace(/^https?:\/\//, "")}</span>
-            </a>
-          )}
+          <TemplateContactLinks personalInfo={personalInfo} variant="stacked" className="text-right" />
         </div>
       </header>
 
@@ -174,6 +137,9 @@ export const ModernSlate: React.FC<TemplateProps> = ({ content, themeConfig, cla
               ))}
             </section>
           )}
+
+          {/* Extra Multi-Entry Sections */}
+          <TemplateExtraSections content={content} themeConfig={themeConfig} />
         </div>
       </div>
     </div>

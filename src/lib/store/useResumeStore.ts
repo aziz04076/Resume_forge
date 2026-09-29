@@ -8,11 +8,18 @@ import {
   SkillCategory,
   ProjectItem,
   CertificationItem,
+  CourseItem,
+  PublicationItem,
+  VolunteeringItem,
+  AwardItem,
+  ReferenceItem,
   LanguageItem,
   CustomSection,
+  SocialLink,
   DEFAULT_RESUME_CONTENT,
   DEFAULT_THEME_CONFIG,
 } from "@/schemas/resume.schema";
+import { FIELD_PRESETS } from "@/lib/data/fieldPresets";
 
 export interface ResumeStoreState {
   id?: string;
@@ -40,11 +47,21 @@ export interface ResumeStoreState {
   setResumeContent: (content: ResumeContent) => void;
   updatePersonalInfo: (data: Partial<PersonalInfo>) => void;
 
+  // Social Links
+  addSocialLink: (platform?: string, url?: string) => void;
+  updateSocialLink: (id: string, data: Partial<SocialLink>) => void;
+  removeSocialLink: (id: string) => void;
+
   // Work experience
   addWorkExperience: () => void;
   updateWorkExperience: (id: string, data: Partial<WorkExperienceItem>) => void;
   removeWorkExperience: (id: string) => void;
   reorderWorkExperience: (newItems: WorkExperienceItem[]) => void;
+
+  // Internships
+  addInternship: () => void;
+  updateInternship: (id: string, data: Partial<WorkExperienceItem>) => void;
+  removeInternship: (id: string) => void;
 
   // Education
   addEducation: () => void;
@@ -66,6 +83,31 @@ export interface ResumeStoreState {
   updateCertification: (id: string, data: Partial<CertificationItem>) => void;
   removeCertification: (id: string) => void;
 
+  // Courses
+  addCourse: () => void;
+  updateCourse: (id: string, data: Partial<CourseItem>) => void;
+  removeCourse: (id: string) => void;
+
+  // Publications
+  addPublication: () => void;
+  updatePublication: (id: string, data: Partial<PublicationItem>) => void;
+  removePublication: (id: string) => void;
+
+  // Volunteering
+  addVolunteering: () => void;
+  updateVolunteering: (id: string, data: Partial<VolunteeringItem>) => void;
+  removeVolunteering: (id: string) => void;
+
+  // Awards
+  addAward: () => void;
+  updateAward: (id: string, data: Partial<AwardItem>) => void;
+  removeAward: (id: string) => void;
+
+  // References
+  addReference: () => void;
+  updateReference: (id: string, data: Partial<ReferenceItem>) => void;
+  removeReference: (id: string) => void;
+
   // Languages
   addLanguage: () => void;
   updateLanguage: (id: string, data: Partial<LanguageItem>) => void;
@@ -76,11 +118,13 @@ export interface ResumeStoreState {
   updateCustomSection: (id: string, data: Partial<CustomSection>) => void;
   removeCustomSection: (id: string) => void;
 
-  // Theme & Sections
+  // Theme, Presets & Fit-to-Pages
   updateThemeConfig: (data: Partial<ThemeConfig>) => void;
   setTemplateId: (templateId: string) => void;
   reorderSections: (newOrder: string[]) => void;
   toggleSectionVisibility: (sectionKey: string) => void;
+  applyFieldPreset: (presetId: string) => void;
+  fitToPages: (targetPages: 1 | 2) => void;
 
   // Undo / Redo
   undo: () => void;
@@ -117,14 +161,15 @@ export function computeResumeScore(content: ResumeContent): number {
     score += 8;
   }
 
-  // Work experience depth and quantification (up to 30 pts)
-  if (workExperience.length > 0) {
+  // Work experience & internships depth and quantification (up to 30 pts)
+  const allExperiences = [...(workExperience || []), ...(content.internships || [])];
+  if (allExperiences.length > 0) {
     score += 10;
     let hasQuantifiedBullet = false;
     let bulletCount = 0;
     const metricRegex = /(\d+%|\$\d+|\d+x|\d+\s*(users|clients|engineers|teams|million|thousand|k))/i;
 
-    for (const exp of workExperience) {
+    for (const exp of allExperiences) {
       bulletCount += exp.bullets.length;
       for (const bullet of exp.bullets) {
         if (metricRegex.test(bullet)) {
@@ -148,8 +193,13 @@ export function computeResumeScore(content: ResumeContent): number {
     score += 10;
   }
 
-  // Projects or Certifications (up to 10 pts)
-  if (projects.length > 0 || (content.certifications && content.certifications.length > 0)) {
+  // Projects, Certifications, Publications, or Awards (up to 10 pts)
+  if (
+    projects.length > 0 ||
+    (content.certifications && content.certifications.length > 0) ||
+    (content.publications && content.publications.length > 0) ||
+    (content.awards && content.awards.length > 0)
+  ) {
     score += 10;
   }
 
@@ -197,6 +247,51 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
         healthScore: computeResumeScore(nextContent),
         isDirty: true,
       };
+    }),
+
+  addSocialLink: (platform = "LinkedIn", url = "") =>
+    set((state) => {
+      const newLink: SocialLink = {
+        id: `social-${Date.now()}`,
+        platform,
+        url,
+        showFullUrl: false,
+      };
+      const existing = state.content.personalInfo.socialLinks || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        personalInfo: {
+          ...state.content.personalInfo,
+          socialLinks: [...existing, newLink],
+        },
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateSocialLink: (id, data) =>
+    set((state) => {
+      const existing = state.content.personalInfo.socialLinks || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        personalInfo: {
+          ...state.content.personalInfo,
+          socialLinks: existing.map((link) => (link.id === id ? { ...link, ...data } : link)),
+        },
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeSocialLink: (id) =>
+    set((state) => {
+      const existing = state.content.personalInfo.socialLinks || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        personalInfo: {
+          ...state.content.personalInfo,
+          socialLinks: existing.filter((link) => link.id !== id),
+        },
+      };
+      return { content: nextContent, isDirty: true };
     }),
 
   addWorkExperience: () =>
@@ -262,6 +357,47 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       const nextContent: ResumeContent = {
         ...state.content,
         workExperience: newItems,
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  addInternship: () =>
+    set((state) => {
+      const newItem: WorkExperienceItem = {
+        id: `intern-${Date.now()}`,
+        company: "Organization / Company",
+        position: "Intern / Trainee",
+        location: "City, State or Remote",
+        startDate: "2023-06",
+        endDate: "2023-08",
+        current: false,
+        bullets: ["Assisted team with core deliverables and completed capstone project."],
+        technologies: [],
+      };
+      const existing = state.content.internships || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        internships: [newItem, ...existing],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateInternship: (id, data) =>
+    set((state) => {
+      const existing = state.content.internships || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        internships: existing.map((item) => (item.id === id ? { ...item, ...data } : item)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeInternship: (id) =>
+    set((state) => {
+      const existing = state.content.internships || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        internships: existing.filter((item) => item.id !== id),
       };
       return { content: nextContent, isDirty: true };
     }),
@@ -470,6 +606,191 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       return { content: nextContent, isDirty: true };
     }),
 
+  addCourse: () =>
+    set((state) => {
+      const newItem: CourseItem = {
+        id: `course-${Date.now()}`,
+        name: "Course or Specialization Name",
+        institution: "Institution / Platform (e.g. Coursera, HarvardX)",
+        date: "2023",
+      };
+      const existing = state.content.courses || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        courses: [...existing, newItem],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateCourse: (id, data) =>
+    set((state) => {
+      const existing = state.content.courses || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        courses: existing.map((c) => (c.id === id ? { ...c, ...data } : c)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeCourse: (id) =>
+    set((state) => {
+      const existing = state.content.courses || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        courses: existing.filter((c) => c.id !== id),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  addPublication: () =>
+    set((state) => {
+      const newItem: PublicationItem = {
+        id: `pub-${Date.now()}`,
+        title: "Publication / Paper Title",
+        publisher: "Publisher / Journal or Conference",
+        date: "2023",
+        url: "",
+        description: "Key findings or contribution summary.",
+      };
+      const existing = state.content.publications || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        publications: [...existing, newItem],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updatePublication: (id, data) =>
+    set((state) => {
+      const existing = state.content.publications || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        publications: existing.map((p) => (p.id === id ? { ...p, ...data } : p)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removePublication: (id) =>
+    set((state) => {
+      const existing = state.content.publications || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        publications: existing.filter((p) => p.id !== id),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  addVolunteering: () =>
+    set((state) => {
+      const newItem: VolunteeringItem = {
+        id: `vol-${Date.now()}`,
+        role: "Volunteer Role",
+        organization: "Organization or Community Initiative",
+        period: "2022 - Present",
+        bullets: ["Led community workshops and organized local outreach programs."],
+      };
+      const existing = state.content.volunteering || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        volunteering: [...existing, newItem],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateVolunteering: (id, data) =>
+    set((state) => {
+      const existing = state.content.volunteering || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        volunteering: existing.map((v) => (v.id === id ? { ...v, ...data } : v)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeVolunteering: (id) =>
+    set((state) => {
+      const existing = state.content.volunteering || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        volunteering: existing.filter((v) => v.id !== id),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  addAward: () =>
+    set((state) => {
+      const newItem: AwardItem = {
+        id: `award-${Date.now()}`,
+        title: "Honor or Award Title",
+        issuer: "Issuing Organization or Institution",
+        date: "2023",
+        description: "Recognition for exceptional performance or leadership.",
+      };
+      const existing = state.content.awards || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        awards: [...existing, newItem],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateAward: (id, data) =>
+    set((state) => {
+      const existing = state.content.awards || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        awards: existing.map((a) => (a.id === id ? { ...a, ...data } : a)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeAward: (id) =>
+    set((state) => {
+      const existing = state.content.awards || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        awards: existing.filter((a) => a.id !== id),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  addReference: () =>
+    set((state) => {
+      const newItem: ReferenceItem = {
+        id: `ref-${Date.now()}`,
+        name: "Full Name",
+        role: "Professional Title",
+        organization: "Company or Institution",
+        contact: "Available upon request",
+      };
+      const existing = state.content.references || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        references: [...existing, newItem],
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  updateReference: (id, data) =>
+    set((state) => {
+      const existing = state.content.references || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        references: existing.map((r) => (r.id === id ? { ...r, ...data } : r)),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
+  removeReference: (id) =>
+    set((state) => {
+      const existing = state.content.references || [];
+      const nextContent: ResumeContent = {
+        ...state.content,
+        references: existing.filter((r) => r.id !== id),
+      };
+      return { content: nextContent, isDirty: true };
+    }),
+
   addLanguage: () =>
     set((state) => {
       const newItem: LanguageItem = {
@@ -576,6 +897,114 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
         isDirty: true,
       };
     }),
+
+  applyFieldPreset: (presetId: string) => {
+    const preset = FIELD_PRESETS.find((p) => p.id === presetId);
+    if (!preset) return;
+    set((state) => ({
+      targetRole: preset.defaultRole || state.targetRole,
+      themeConfig: {
+        ...state.themeConfig,
+        templateId: preset.recommendedTemplateId || state.themeConfig.templateId,
+        sectionOrder: preset.sectionOrder || state.themeConfig.sectionOrder,
+        hiddenSections: preset.hiddenSections || [],
+      },
+      isDirty: true,
+    }));
+  },
+
+  fitToPages: (targetPages: 1 | 2) => {
+    const { content, themeConfig } = get();
+    // Count items and approximate length
+    const expCount = content.workExperience.length + (content.internships?.length || 0);
+    const bulletsCount =
+      content.workExperience.reduce((a, b) => a + b.bullets.length, 0) +
+      (content.internships?.reduce((a, b) => a + b.bullets.length, 0) || 0);
+    const otherSectionsCount =
+      (content.education?.length || 0) +
+      (content.projects?.length || 0) +
+      (content.certifications?.length || 0) +
+      (content.courses?.length || 0) +
+      (content.publications?.length || 0) +
+      (content.volunteering?.length || 0) +
+      (content.awards?.length || 0) +
+      (content.references?.length || 0);
+
+    const totalLoad = expCount * 3 + bulletsCount * 1.5 + otherSectionsCount * 2;
+
+    if (targetPages === 1) {
+      if (totalLoad > 22) {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "small",
+            lineSpacing: "compact",
+            pageMargins: "compact",
+            fitToPages: "1",
+          },
+          isDirty: true,
+        });
+      } else if (totalLoad > 14) {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "small",
+            lineSpacing: "compact",
+            pageMargins: "normal",
+            fitToPages: "1",
+          },
+          isDirty: true,
+        });
+      } else {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "medium",
+            lineSpacing: "normal",
+            pageMargins: "normal",
+            fitToPages: "1",
+          },
+          isDirty: true,
+        });
+      }
+    } else {
+      // 2 pages
+      if (totalLoad > 35) {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "small",
+            lineSpacing: "compact",
+            pageMargins: "compact",
+            fitToPages: "2",
+          },
+          isDirty: true,
+        });
+      } else if (totalLoad > 20) {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "medium",
+            lineSpacing: "normal",
+            pageMargins: "normal",
+            fitToPages: "2",
+          },
+          isDirty: true,
+        });
+      } else {
+        set({
+          themeConfig: {
+            ...themeConfig,
+            fontSize: "large",
+            lineSpacing: "spacious",
+            pageMargins: "spacious",
+            fitToPages: "2",
+          },
+          isDirty: true,
+        });
+      }
+    }
+  },
 
   undo: () =>
     set((state) => {

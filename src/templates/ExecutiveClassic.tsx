@@ -5,6 +5,9 @@ import {
   getLineSpacingClass,
   getMarginPaddingClass,
 } from "./templateUtils";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
 
 export const ExecutiveClassic: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, certifications } = content;
@@ -24,36 +27,21 @@ export const ExecutiveClassic: React.FC<TemplateProps> = ({ content, themeConfig
     >
       {/* Centered Traditional Executive Header */}
       <header className="text-center border-b-2 pb-4 mb-4" style={{ borderColor: primaryColor + "33" }}>
-        <h1
-          className={`${sizeClasses.name} tracking-tight font-bold uppercase mb-1`}
-          style={{ color: primaryColor }}
-        >
-          {personalInfo.fullName || "Your Full Name"}
-        </h1>
-        {personalInfo.jobTitle && (
-          <p className="text-xs italic tracking-wide text-stone-600 mb-2">
-            {personalInfo.jobTitle}
-          </p>
-        )}
+        <div className="flex flex-col items-center">
+          <TemplateAvatar personalInfo={personalInfo} className="mb-2" />
+          <h1
+            className={`${sizeClasses.name} tracking-tight font-bold uppercase mb-1`}
+            style={{ color: primaryColor }}
+          >
+            {personalInfo.fullName || "Your Full Name"}
+          </h1>
+          {personalInfo.jobTitle && (
+            <p className="text-xs italic tracking-wide text-stone-600 mb-2">
+              {personalInfo.jobTitle}
+            </p>
+          )}
 
-        <div className="flex flex-wrap justify-center items-center gap-x-3 text-[11px] text-stone-600">
-          {personalInfo.location && <span>{personalInfo.location}</span>}
-          {personalInfo.phone && <span>• {personalInfo.phone}</span>}
-          {personalInfo.email && (
-            <span>
-              • <a href={`mailto:${personalInfo.email}`} className="hover:underline">{personalInfo.email}</a>
-            </span>
-          )}
-          {personalInfo.linkedin && (
-            <span>
-              • <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="hover:underline">{personalInfo.linkedin}</a>
-            </span>
-          )}
-          {personalInfo.website && (
-            <span>
-              • <a href={personalInfo.website} target="_blank" rel="noreferrer" className="hover:underline">{personalInfo.website.replace(/^https?:\/\//, "")}</a>
-            </span>
-          )}
+          <TemplateContactLinks personalInfo={personalInfo} className="justify-center" />
         </div>
       </header>
 
@@ -181,6 +169,9 @@ export const ExecutiveClassic: React.FC<TemplateProps> = ({ content, themeConfig
             </div>
           </section>
         )}
+
+        {/* Extra Multi-Entry Sections */}
+        <TemplateExtraSections content={content} themeConfig={themeConfig} />
       </div>
     </div>
   );

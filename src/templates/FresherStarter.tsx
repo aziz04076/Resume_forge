@@ -6,7 +6,10 @@ import {
   getLineSpacingClass,
   getMarginPaddingClass,
 } from "./templateUtils";
-import { Globe, Linkedin, Github, GraduationCap, Sparkles } from "lucide-react";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
+import { GraduationCap, Sparkles } from "lucide-react";
 
 export const FresherStarter: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, projects, certifications, languages } = content;
@@ -24,46 +27,21 @@ export const FresherStarter: React.FC<TemplateProps> = ({ content, themeConfig, 
     <div className={`resume-paper ${fontClass} ${paddingClass} ${className} text-slate-800`}>
       {/* Header */}
       <header className="border-b-2 pb-4 mb-4" style={{ borderColor: primaryColor }}>
-        <div className="flex justify-between items-baseline">
-          <div>
-            <h1 className={`${sizeClasses.name} font-bold`} style={{ color: primaryColor }}>
-              {personalInfo.fullName || "Your Full Name"}
-            </h1>
-            {personalInfo.jobTitle && (
-              <p className="text-xs font-semibold uppercase tracking-wider mt-0.5" style={{ color: accentColor }}>
-                {personalInfo.jobTitle}
-              </p>
-            )}
+        <div className="flex justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <TemplateAvatar personalInfo={personalInfo} />
+            <div>
+              <h1 className={`${sizeClasses.name} font-bold`} style={{ color: primaryColor }}>
+                {personalInfo.fullName || "Your Full Name"}
+              </h1>
+              {personalInfo.jobTitle && (
+                <p className="text-xs font-semibold uppercase tracking-wider mt-0.5" style={{ color: accentColor }}>
+                  {personalInfo.jobTitle}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="text-right text-[11px] text-slate-600 space-y-0.5">
-            {personalInfo.email && (
-              <div>
-                <a href={`mailto:${personalInfo.email}`} className="hover:underline">
-                  {personalInfo.email}
-                </a>
-              </div>
-            )}
-            {personalInfo.phone && <div>{personalInfo.phone}</div>}
-            {personalInfo.location && <div>{personalInfo.location}</div>}
-          </div>
-        </div>
-
-        <div className="flex gap-4 mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
-          {personalInfo.linkedin && (
-            <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:underline text-blue-600">
-              <Linkedin className="w-2.5 h-2.5" /> LinkedIn
-            </a>
-          )}
-          {personalInfo.github && (
-            <a href={`https://${personalInfo.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:underline text-slate-800">
-              <Github className="w-2.5 h-2.5" /> GitHub
-            </a>
-          )}
-          {personalInfo.website && (
-            <a href={personalInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:underline text-slate-700">
-              <Globe className="w-2.5 h-2.5" /> Portfolio
-            </a>
-          )}
+          <TemplateContactLinks personalInfo={personalInfo} variant="stacked" className="text-right" />
         </div>
       </header>
 
@@ -245,6 +223,9 @@ export const FresherStarter: React.FC<TemplateProps> = ({ content, themeConfig, 
               </p>
             </section>
           )}
+
+          {/* Extra Multi-Entry Sections */}
+          <TemplateExtraSections content={content} themeConfig={themeConfig} />
         </div>
       </div>
     </div>

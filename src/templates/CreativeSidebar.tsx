@@ -5,7 +5,9 @@ import {
   getFontSizeClasses,
   getLineSpacingClass,
 } from "./templateUtils";
-import { Mail, Phone, MapPin, Globe, Linkedin, Github } from "lucide-react";
+import { TemplateAvatar } from "./TemplateAvatar";
+import { TemplateContactLinks } from "./TemplateContactLinks";
+import { TemplateExtraSections } from "./TemplateExtraSections";
 
 export const CreativeSidebar: React.FC<TemplateProps> = ({ content, themeConfig, className = "" }) => {
   const { personalInfo, workExperience, education, skills, projects, certifications, languages } = content;
@@ -26,8 +28,9 @@ export const CreativeSidebar: React.FC<TemplateProps> = ({ content, themeConfig,
         style={{ backgroundColor: primaryColor }}
       >
         <div className="space-y-6">
-          {/* Personal Info */}
+          {/* Avatar & Personal Info */}
           <div>
+            <TemplateAvatar personalInfo={personalInfo} className="mb-3 border-2 border-white/30" />
             <h1 className="text-xl font-extrabold tracking-tight leading-tight text-white mb-1">
               {personalInfo.fullName || "Your Full Name"}
             </h1>
@@ -43,50 +46,12 @@ export const CreativeSidebar: React.FC<TemplateProps> = ({ content, themeConfig,
             <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-300 border-b border-white/20 pb-1">
               Contact
             </h2>
-            {personalInfo.email && (
-              <div className="flex items-center gap-1.5 break-all">
-                <Mail className="w-3 h-3 shrink-0 opacity-75" />
-                <a href={`mailto:${personalInfo.email}`} className="hover:underline">
-                  {personalInfo.email}
-                </a>
-              </div>
-            )}
-            {personalInfo.phone && (
-              <div className="flex items-center gap-1.5">
-                <Phone className="w-3 h-3 shrink-0 opacity-75" />
-                <span>{personalInfo.phone}</span>
-              </div>
-            )}
-            {personalInfo.location && (
-              <div className="flex items-center gap-1.5">
-                <MapPin className="w-3 h-3 shrink-0 opacity-75" />
-                <span>{personalInfo.location}</span>
-              </div>
-            )}
-            {personalInfo.linkedin && (
-              <div className="flex items-center gap-1.5 break-all">
-                <Linkedin className="w-3 h-3 shrink-0 opacity-75" />
-                <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noreferrer" className="hover:underline">
-                  {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
-                </a>
-              </div>
-            )}
-            {personalInfo.github && (
-              <div className="flex items-center gap-1.5 break-all">
-                <Github className="w-3 h-3 shrink-0 opacity-75" />
-                <a href={`https://${personalInfo.github}`} target="_blank" rel="noreferrer" className="hover:underline">
-                  {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
-                </a>
-              </div>
-            )}
-            {personalInfo.website && (
-              <div className="flex items-center gap-1.5 break-all">
-                <Globe className="w-3 h-3 shrink-0 opacity-75" />
-                <a href={personalInfo.website} target="_blank" rel="noreferrer" className="hover:underline">
-                  {personalInfo.website.replace(/^https?:\/\//, "")}
-                </a>
-              </div>
-            )}
+            <TemplateContactLinks
+              personalInfo={personalInfo}
+              variant="stacked"
+              textColor="#f8fafc"
+              iconColor="#cbd5e1"
+            />
           </div>
 
           {/* Education in Sidebar */}
@@ -265,6 +230,9 @@ export const CreativeSidebar: React.FC<TemplateProps> = ({ content, themeConfig,
               </div>
             </section>
           )}
+
+          {/* Extra Multi-Entry Sections */}
+          <TemplateExtraSections content={content} themeConfig={themeConfig} />
         </div>
       </main>
     </div>

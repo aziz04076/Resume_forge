@@ -6,17 +6,40 @@ import {
   Packer,
   AlignmentType,
   BorderStyle,
+  ExternalHyperlink,
 } from "docx";
 import { saveAs } from "file-saver";
 import { ResumeContent, ThemeConfig } from "@/schemas/resume.schema";
+import {
+  normalizeUrl,
+  getDisplayLinkText,
+  normalizePhoneUri,
+} from "@/lib/utils/urlHelper";
 
-export async function exportToDocx(
+export function buildDocxDocument(
   content: ResumeContent,
-  themeConfig: ThemeConfig,
-  fileName = "Resume.docx"
-) {
-  const { personalInfo, workExperience, education, skills, projects, certifications } = content;
+  themeConfig?: ThemeConfig
+): Document {
+  const font =
+    themeConfig?.fontFamily === "Merriweather" || themeConfig?.fontFamily === "Playfair"
+      ? "Georgia"
+      : "Calibri";
+  const {
+    personalInfo,
+    workExperience,
+    internships,
+    education,
+    skills,
+    projects,
+    certifications,
+    courses,
+    publications,
+    volunteering,
+    awards,
+    references,
+  } = content;
 
+  const showFullUrl = personalInfo.showFullUrlAsText ?? false;
   const children: Paragraph[] = [];
 
   // Header - Full Name
@@ -26,10 +49,10 @@ export async function exportToDocx(
       spacing: { after: 100 },
       children: [
         new TextRun({
-          text: personalInfo.fullName.toUpperCase(),
+          text: (personalInfo.fullName || "Candidate").toUpperCase(),
           bold: true,
           size: 32, // 16pt
-          font: "Calibri",
+          font,
         }),
       ],
     })
@@ -54,29 +77,150 @@ export async function exportToDocx(
     );
   }
 
-  // Contact line
-  const contactParts = [
-    personalInfo.email,
-    personalInfo.phone,
-    personalInfo.location,
-    personalInfo.linkedin,
-    personalInfo.github,
-    personalInfo.website,
-  ].filter(Boolean);
+  // Clickable Contact elements
+  const contactElements: (TextRun | ExternalHyperlink)[] = [];
 
-  if (contactParts.length > 0) {
+  if (personalInfo.email) {
+    contactElements.push(
+      new ExternalHyperlink({
+        children: [
+          new TextRun({
+            text: personalInfo.email,
+            size: 20,
+            color: "4F46E5",
+            underline: {},
+            font: "Calibri",
+          }),
+        ],
+        link: `mailto:${personalInfo.email}`,
+      })
+    );
+  }
+
+  if (personalInfo.phone) {
+    if (contactElements.length > 0) {
+      contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+    }
+    contactElements.push(
+      new ExternalHyperlink({
+        children: [
+          new TextRun({
+            text: personalInfo.phone,
+            size: 20,
+            color: "4F46E5",
+            underline: {},
+            font: "Calibri",
+          }),
+        ],
+        link: normalizePhoneUri(personalInfo.phone),
+      })
+    );
+  }
+
+  if (personalInfo.location) {
+    if (contactElements.length > 0) {
+      contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+    }
+    contactElements.push(
+      new TextRun({
+        text: personalInfo.location,
+        size: 20,
+        color: "555555",
+        font: "Calibri",
+      })
+    );
+  }
+
+  if (personalInfo.linkedin) {
+    if (contactElements.length > 0) {
+      contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+    }
+    contactElements.push(
+      new ExternalHyperlink({
+        children: [
+          new TextRun({
+            text: getDisplayLinkText(personalInfo.linkedin, showFullUrl),
+            size: 20,
+            color: "4F46E5",
+            underline: {},
+            font: "Calibri",
+          }),
+        ],
+        link: normalizeUrl(personalInfo.linkedin),
+      })
+    );
+  }
+
+  if (personalInfo.github) {
+    if (contactElements.length > 0) {
+      contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+    }
+    contactElements.push(
+      new ExternalHyperlink({
+        children: [
+          new TextRun({
+            text: getDisplayLinkText(personalInfo.github, showFullUrl),
+            size: 20,
+            color: "4F46E5",
+            underline: {},
+            font: "Calibri",
+          }),
+        ],
+        link: normalizeUrl(personalInfo.github),
+      })
+    );
+  }
+
+  if (personalInfo.website) {
+    if (contactElements.length > 0) {
+      contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+    }
+    contactElements.push(
+      new ExternalHyperlink({
+        children: [
+          new TextRun({
+            text: getDisplayLinkText(personalInfo.website, showFullUrl),
+            size: 20,
+            color: "4F46E5",
+            underline: {},
+            font: "Calibri",
+          }),
+        ],
+        link: normalizeUrl(personalInfo.website),
+      })
+    );
+  }
+
+  if (personalInfo.socialLinks && personalInfo.socialLinks.length > 0) {
+    for (const sl of personalInfo.socialLinks) {
+      if (sl.url) {
+        if (contactElements.length > 0) {
+          contactElements.push(new TextRun({ text: "  |  ", size: 20, color: "888888", font: "Calibri" }));
+        }
+        contactElements.push(
+          new ExternalHyperlink({
+            children: [
+              new TextRun({
+                text: getDisplayLinkText(sl.url, sl.showFullUrl || showFullUrl),
+                size: 20,
+                color: "4F46E5",
+                underline: {},
+                font: "Calibri",
+              }),
+            ],
+            link: normalizeUrl(sl.url),
+          })
+        );
+      }
+    }
+  }
+
+  if (contactElements.length > 0) {
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
         spacing: { after: 240 },
-        children: [
-          new TextRun({
-            text: contactParts.join("  |  "),
-            size: 20, // 10pt
-            color: "555555",
-            font: "Calibri",
-          }),
-        ],
+        children: contactElements,
       })
     );
   }
@@ -331,6 +475,206 @@ export async function exportToDocx(
     }
   }
 
+  // Internships & Practicums
+  if (internships && internships.length > 0) {
+    addSectionHeading("Internships & Practicums");
+    for (const intern of internships) {
+      children.push(
+        new Paragraph({
+          spacing: { before: 80, after: 40 },
+          children: [
+            new TextRun({
+              text: `${intern.position} — ${intern.company}`,
+              bold: true,
+              size: 22,
+              font: "Calibri",
+            }),
+            new TextRun({
+              text: ` (${intern.startDate} - ${intern.current ? "Present" : intern.endDate}${intern.location ? `, ${intern.location}` : ""})`,
+              italics: true,
+              size: 20,
+              color: "666666",
+              font: "Calibri",
+            }),
+          ],
+        })
+      );
+      for (const bullet of intern.bullets) {
+        children.push(
+          new Paragraph({
+            bullet: { level: 0 },
+            spacing: { after: 40 },
+            children: [
+              new TextRun({
+                text: bullet,
+                size: 20,
+                font: "Calibri",
+              }),
+            ],
+          })
+        );
+      }
+    }
+  }
+
+  // Courses & Continuing Education
+  if (courses && courses.length > 0) {
+    addSectionHeading("Courses & Continuing Education");
+    for (const course of courses) {
+      children.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [
+            new TextRun({
+              text: `${course.name} — ${course.institution} (${course.date})`,
+              size: 21,
+              font: "Calibri",
+            }),
+          ],
+        })
+      );
+    }
+  }
+
+  // Publications & Research
+  if (publications && publications.length > 0) {
+    addSectionHeading("Publications & Research");
+    for (const pub of publications) {
+      children.push(
+        new Paragraph({
+          spacing: { before: 80, after: 40 },
+          children: [
+            new TextRun({
+              text: pub.title,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+            new TextRun({
+              text: ` — ${pub.publisher} (${pub.date})`,
+              size: 20,
+              font: "Calibri",
+            }),
+          ],
+        })
+      );
+      if (pub.description) {
+        children.push(
+          new Paragraph({
+            spacing: { after: 40 },
+            children: [
+              new TextRun({
+                text: pub.description,
+                size: 20,
+                font: "Calibri",
+              }),
+            ],
+          })
+        );
+      }
+    }
+  }
+
+  // Volunteering & Community
+  if (volunteering && volunteering.length > 0) {
+    addSectionHeading("Volunteering & Community Leadership");
+    for (const vol of volunteering) {
+      children.push(
+        new Paragraph({
+          spacing: { before: 80, after: 40 },
+          children: [
+            new TextRun({
+              text: `${vol.role} — ${vol.organization}`,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+            new TextRun({
+              text: ` (${vol.period})`,
+              italics: true,
+              size: 20,
+              color: "666666",
+              font: "Calibri",
+            }),
+          ],
+        })
+      );
+      for (const bullet of vol.bullets) {
+        children.push(
+          new Paragraph({
+            bullet: { level: 0 },
+            spacing: { after: 40 },
+            children: [
+              new TextRun({
+                text: bullet,
+                size: 20,
+                font: "Calibri",
+              }),
+            ],
+          })
+        );
+      }
+    }
+  }
+
+  // Honors & Awards
+  if (awards && awards.length > 0) {
+    addSectionHeading("Honors & Awards");
+    for (const award of awards) {
+      children.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [
+            new TextRun({
+              text: `${award.title} — ${award.issuer} (${award.date})`,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+            ...(award.description
+              ? [
+                  new TextRun({
+                    text: `: ${award.description}`,
+                    size: 20,
+                    font: "Calibri",
+                  }),
+                ]
+              : []),
+          ],
+        })
+      );
+    }
+  }
+
+  // References
+  if (references && references.length > 0) {
+    addSectionHeading("Professional References");
+    for (const ref of references) {
+      children.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [
+            new TextRun({
+              text: `${ref.name}${ref.role ? ` (${ref.role})` : ""}${ref.organization ? `, ${ref.organization}` : ""}`,
+              bold: true,
+              size: 21,
+              font: "Calibri",
+            }),
+            ...(ref.contact
+              ? [
+                  new TextRun({
+                    text: ` — ${ref.contact}`,
+                    size: 20,
+                    font: "Calibri",
+                  }),
+                ]
+              : []),
+          ],
+        })
+      );
+    }
+  }
+
   const doc = new Document({
     sections: [
       {
@@ -349,6 +693,24 @@ export async function exportToDocx(
     ],
   });
 
+  return doc;
+}
+
+export async function generateDocxBuffer(
+  content: ResumeContent,
+  themeConfig?: ThemeConfig
+): Promise<Buffer> {
+  const doc = buildDocxDocument(content, themeConfig);
+  return await Packer.toBuffer(doc);
+}
+
+export async function exportToDocx(
+  content: ResumeContent,
+  themeConfig?: ThemeConfig,
+  fileName = "Resume.docx"
+): Promise<void> {
+  const doc = buildDocxDocument(content, themeConfig);
   const blob = await Packer.toBlob(doc);
   saveAs(blob, fileName);
 }
+
