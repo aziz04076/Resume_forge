@@ -2,6 +2,16 @@ import { TemplateMetadata } from "./types";
 
 export const TEMPLATES: TemplateMetadata[] = [
   {
+    id: "classic-professional",
+    name: "Classic Professional",
+    category: "Executive",
+    description: "LaTeX-grade academic and executive classic format with small-caps name, ruled sections, and optional photo.",
+    isPopular: true,
+    isAtsOptimized: true,
+    recommendedColors: ["#0f172a", "#1e293b", "#000000"],
+    thumbnailGradient: "from-stone-900 to-slate-950",
+  },
+  {
     id: "minimal-ats",
     name: "Minimalist ATS",
     category: "ATS-Friendly",

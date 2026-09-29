@@ -1,0 +1,123 @@
+{
+  "personalInfo": {
+    "fullName": "Elena Rostova",
+    "jobTitle": "Principal Distributed Systems Architect",
+    "email": "elena.rostova@example.com",
+    "phone": "+1 (555) 782-9014",
+    "location": "Seattle, WA",
+    "website": "https://elena-rostova.dev",
+    "linkedin": "https://linkedin.com/in/elena-rostova",
+    "github": "https://github.com/elena-rostova",
+    "portfolioUrl": "https://elena-rostova.dev/projects",
+    "showFullUrlAsText": false,
+    "photoUrl": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><rect width='120' height='120' fill='%23e0e7ff'/><circle cx='60' cy='48' r='24' fill='%234f46e5'/><circle cx='60' cy='110' r='40' fill='%234f46e5'/></svg>",
+    "showPhoto": true,
+    "summary": "Distributed systems engineer with 10+ years architecting fault-tolerant microservices and high-throughput pipelines. Proven record cutting response latency, 98% P99 SLA adherence, and managing $40M+ annual cloud budgets."
+  },
+  "workExperience": [
+    {
+      "id": "exp-1",
+      "company": "Apex Distributed Labs",
+      "position": "Principal Infrastructure Architect",
+      "location": "Seattle, WA",
+      "startDate": "2021-04",
+      "endDate": "Present",
+      "current": true,
+      "bullets": [
+        "Architected multi-region consensus protocol handling 450k+ transactions/sec with 99.999% availability & zero data loss during failovers.",
+        "Overhauled caching layer reducing P99 response latency, 98% improvement from 240ms to 4.8ms under peak load.",
+        "Managed $12M cloud infrastructure across AWS & GCP, cutting compute waste by 34% through automated spot-instance bin-packing.",
+        "Special characters verified: % & $ # _ { } < > \" ' – — ’ and unicode (Café, Zürich, 日本語, €500)."
+      ],
+      "technologies": ["Rust", "Go", "Kubernetes", "gRPC", "Kafka", "AWS"]
+    },
+    {
+      "id": "exp-2",
+      "company": "Horizon Cloud Systems",
+      "position": "Senior Backend Engineer",
+      "location": "San Francisco, CA",
+      "startDate": "2017-08",
+      "endDate": "2021-03",
+      "current": false,
+      "bullets": [
+        "Led migration of monolithic order service to event-driven serverless architecture, scaling throughput 4.2x.",
+        "Implemented end-to-end telemetry and distributed tracing across 80+ microservices using OpenTelemetry & Prometheus."
+      ],
+      "technologies": ["Go", "PostgreSQL", "Docker", "Terraform", "Redis"]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-1",
+      "institution": "University of Washington",
+      "degree": "Master of Science",
+      "fieldOfStudy": "Computer Science & Systems",
+      "location": "Seattle, WA",
+      "startDate": "2015-09",
+      "endDate": "2017-06",
+      "gpa": "3.94 / 4.0",
+      "honors": ["Summa Cum Laude", "Graduate Research Fellowship"]
+    }
+  ],
+  "skills": [
+    {
+      "id": "sk-1",
+      "category": "Languages & Core",
+      "items": ["Rust", "Go", "C++", "TypeScript", "Python", "SQL"]
+    },
+    {
+      "id": "sk-2",
+      "category": "Distributed Systems",
+      "items": ["Raft", "Paxos", "Kafka", "gRPC", "GraphQL", "Redis"]
+    },
+    {
+      "id": "sk-3",
+      "category": "Cloud & DevOps",
+      "items": ["Kubernetes", "Docker", "Terraform", "AWS", "GCP", "CI/CD"]
+    },
+    {
+      "id": "sk-4",
+      "category": "Databases & Storage",
+      "items": ["PostgreSQL", "Cassandra", "DynamoDB", "S3", "CockroachDB"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-1",
+      "name": "ChronosEngine",
+      "description": "High-performance distributed time-series database engine written in Rust with SIMD-vectorized querying.",
+      "role": "Creator & Lead Maintainer",
+      "liveUrl": "https://chronosengine.dev",
+      "githubUrl": "https://github.com/elena-rostova/chronos",
+      "bullets": [
+        "Engineered zero-copy parquet ingestion pipeline sustaining 1.2M metrics/sec per node.",
+        "Authored Raft replication layer guaranteeing linearizable reads and atomic partition failover."
+      ],
+      "technologies": ["Rust", "Apache Arrow", "Tokio", "SIMD", "Raft"]
+    }
+  ],
+  "certifications": [
+    {
+      "id": "cert-1",
+      "name": "AWS Certified Solutions Architect – Professional",
+      "issuer": "Amazon Web Services",
+      "issueDate": "2023-05",
+      "expiryDate": "2026-05",
+      "credentialId": "AWS-PSA-882190",
+      "url": "https://aws.amazon.com/verification"
+    }
+  ],
+  "languages": [
+    {
+      "id": "lang-1",
+      "language": "English",
+      "proficiency": "Native"
+    },
+    {
+      "id": "lang-2",
+      "language": "German",
+      "proficiency": "Professional"
+    }
+  ],
+  "customSections": []
+}

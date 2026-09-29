@@ -10,6 +10,7 @@ export const ThemeCustomizer: React.FC = () => {
 
   const fonts: { label: string; value: ThemeConfig["fontFamily"] }[] = [
     { label: "Inter (Modern Sans)", value: "Inter" },
+    { label: "Latin Modern Roman (LaTeX Serif)", value: "Latin Modern Roman" },
     { label: "Merriweather (Classic Serif)", value: "Merriweather" },
     { label: "Roboto (Clean Corporate)", value: "Roboto" },
     { label: "Playfair (Executive Editorial)", value: "Playfair" },
@@ -234,6 +235,109 @@ export const ThemeCustomizer: React.FC = () => {
                 ) : (
                   <Eye className="w-3.5 h-3.5 text-indigo-400" />
                 )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 5. Paper Format & Pagination */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Paper Format & Page Budget
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">Paper Size</label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: "A4 (210 × 297 mm)", value: "a4" },
+                { label: "US Letter (8.5 × 11 in)", value: "letter" },
+              ].map((p) => (
+                <button
+                  key={p.value}
+                  onClick={() => updateThemeConfig({ pageSize: p.value as "a4" | "letter" })}
+                  className={`p-2.5 rounded-lg text-xs font-medium border text-center transition-all ${
+                    (themeConfig.pageSize || "a4") === p.value
+                      ? "border-indigo-500 bg-indigo-600 text-white"
+                      : "border-slate-800 bg-slate-950/40 text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">Fit to Target Pages</label>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { label: "Auto Flow", value: "auto" },
+                { label: "Fit 1 Page", value: "1" },
+                { label: "Fit 2 Pages", value: "2" },
+              ].map((fit) => (
+                <button
+                  key={fit.value}
+                  onClick={() => updateThemeConfig({ fitToPages: fit.value as "auto" | "1" | "2" })}
+                  className={`p-2.5 rounded-lg text-xs font-medium border text-center transition-all ${
+                    (themeConfig.fitToPages || "auto") === fit.value
+                      ? "border-indigo-500 bg-indigo-600 text-white"
+                      : "border-slate-800 bg-slate-950/40 text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {fit.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 6. Document Branding & Export Privacy */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 space-y-3">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          PDF & Print Branding (Zero Website Traces)
+        </h3>
+        <p className="text-xs text-slate-400">
+          Candidates retain 100% ownership of their resume. Control whether any reference to ResumeForge appears in output.
+        </p>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            {
+              id: "none",
+              label: "Completely Unbranded",
+              desc: "Zero footer, zero metadata",
+            },
+            {
+              id: "metadata-only",
+              label: "Metadata Only (Default)",
+              desc: "No visible mark; invisible PDF creator tag",
+            },
+            {
+              id: "visible",
+              label: "Discreet Footer",
+              desc: "Small footer credit mark",
+            },
+          ].map((b) => {
+            const isSelected = (themeConfig.brandingLevel || "metadata-only") === b.id;
+            return (
+              <button
+                key={b.id}
+                onClick={() =>
+                  updateThemeConfig({
+                    brandingLevel: b.id as "none" | "metadata-only" | "visible",
+                    showCreatedWithBadge: b.id === "visible",
+                  })
+                }
+                className={`p-3 rounded-lg border text-left text-xs transition-all ${
+                  isSelected
+                    ? "border-indigo-500 bg-indigo-950/30 text-white ring-1 ring-indigo-500"
+                    : "border-slate-800 bg-slate-950/40 text-slate-400 hover:text-white"
+                }`}
+              >
+                <div className="font-semibold">{b.label}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">{b.desc}</div>
               </button>
             );
           })}

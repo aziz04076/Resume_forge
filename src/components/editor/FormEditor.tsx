@@ -24,6 +24,7 @@ import {
 import { BulletImproverModal } from "./BulletImproverModal";
 import { PhotoUploadModal } from "./PhotoUploadModal";
 import { FIELD_PRESETS } from "@/lib/data/fieldPresets";
+import { ContentLinterTag } from "./ContentLinterTag";
 import { toast } from "sonner";
 
 export const FormEditor: React.FC = () => {
@@ -478,6 +479,7 @@ export const FormEditor: React.FC = () => {
                 placeholder="2-3 concise sentences summarizing your experience, top achievements, and primary skillset..."
                 className="w-full bg-slate-900 border border-slate-800 focus:border-indigo-500 rounded-lg p-3 text-xs text-white placeholder-slate-600 outline-none leading-relaxed"
               />
+              <ContentLinterTag text={personalInfo.summary} fieldName="Summary" />
             </div>
           </div>
         )}
@@ -598,43 +600,46 @@ export const FormEditor: React.FC = () => {
                   </div>
 
                   {exp.bullets.map((bullet, bIdx) => (
-                    <div key={bIdx} className="flex items-center gap-2">
-                      <span className="text-slate-600 text-xs">•</span>
-                      <input
-                        type="text"
-                        value={bullet}
-                        onChange={(e) => {
-                          const newBullets = [...exp.bullets];
-                          newBullets[bIdx] = e.target.value;
-                          updateWorkExperience(exp.id, { bullets: newBullets });
-                        }}
-                        className="flex-1 bg-slate-950 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-white outline-none focus:border-indigo-500"
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setImproverState({
-                            isOpen: true,
-                            expId: exp.id,
-                            bulletIndex: bIdx,
-                            initialBullet: bullet,
-                          })
-                        }
-                        title="Optimize with AI"
-                        className="text-indigo-400 hover:text-indigo-300 p-1"
-                      >
-                        <Sparkles className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const newBullets = exp.bullets.filter((_, idx) => idx !== bIdx);
-                          updateWorkExperience(exp.id, { bullets: newBullets });
-                        }}
-                        className="text-slate-600 hover:text-rose-400 p-1"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                    <div key={bIdx} className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-600 text-xs">•</span>
+                        <input
+                          type="text"
+                          value={bullet}
+                          onChange={(e) => {
+                            const newBullets = [...exp.bullets];
+                            newBullets[bIdx] = e.target.value;
+                            updateWorkExperience(exp.id, { bullets: newBullets });
+                          }}
+                          className="flex-1 bg-slate-950 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-white outline-none focus:border-indigo-500"
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setImproverState({
+                              isOpen: true,
+                              expId: exp.id,
+                              bulletIndex: bIdx,
+                              initialBullet: bullet,
+                            })
+                          }
+                          title="Optimize with AI"
+                          className="text-indigo-400 hover:text-indigo-300 p-1"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newBullets = exp.bullets.filter((_, idx) => idx !== bIdx);
+                            updateWorkExperience(exp.id, { bullets: newBullets });
+                          }}
+                          className="text-slate-600 hover:text-rose-400 p-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      <ContentLinterTag text={bullet} fieldName={`Bullet ${bIdx + 1}`} />
                     </div>
                   ))}
                 </div>

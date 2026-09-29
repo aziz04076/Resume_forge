@@ -161,7 +161,18 @@ export const ResumeContentSchema = z.object({
 
 export const ThemeConfigSchema = z.object({
   templateId: z.string().default("minimal-ats"),
-  fontFamily: z.enum(["Inter", "Merriweather", "Roboto", "Playfair", "JetBrains Mono", "Outfit"]).default("Inter"),
+  fontFamily: z
+    .enum([
+      "Inter",
+      "Merriweather",
+      "Roboto",
+      "Playfair",
+      "JetBrains Mono",
+      "Outfit",
+      "Latin Modern Roman",
+      "Computer Modern",
+    ])
+    .default("Inter"),
   primaryColor: z.string().default("#1e293b"),
   accentColor: z.string().default("#3b82f6"),
   textColor: z.string().default("#0f172a"),
@@ -169,7 +180,8 @@ export const ThemeConfigSchema = z.object({
   lineSpacing: z.enum(["compact", "normal", "spacious"]).default("normal"),
   pageMargins: z.enum(["compact", "normal", "spacious"]).default("normal"),
   pageSize: z.enum(["a4", "letter"]).default("a4"),
-  showCreatedWithBadge: z.boolean().default(true),
+  showCreatedWithBadge: z.boolean().default(false),
+  brandingLevel: z.enum(["none", "metadata-only", "visible"]).default("metadata-only"),
   fitToPages: z.enum(["auto", "1", "2"]).default("auto"),
   sectionOrder: z.array(z.string()).default([
     "summary",
@@ -357,7 +369,8 @@ export const DEFAULT_THEME_CONFIG: ThemeConfig = {
   lineSpacing: "normal",
   pageMargins: "normal",
   pageSize: "a4",
-  showCreatedWithBadge: true,
+  showCreatedWithBadge: false,
+  brandingLevel: "metadata-only",
   fitToPages: "auto",
   sectionOrder: [
     "summary",

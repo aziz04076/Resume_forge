@@ -30,6 +30,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  serverExternalPackages: ["playwright", "unpdf"],
   async headers() {
     return [
       {

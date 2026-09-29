@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useResumeStore } from "@/lib/store/useResumeStore";
 import { exportToDocx } from "@/lib/export/docxExporter";
-import { exportToClientPdf, printResume } from "@/lib/export/pdfExporter";
+import { exportToClientPdf, triggerCleanPrint, printResume } from "@/lib/export/pdfExporter";
 import { exportToJson, exportToTxt } from "@/lib/export/miscExporters";
 import { HealthScoreModal } from "./HealthScoreModal";
 import { TailorModal } from "./TailorModal";
@@ -382,16 +382,22 @@ export const EditorHeader: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => {
-                    printResume();
+                  onClick={async () => {
                     setIsExportMenuOpen(false);
+                    try {
+                      toast.info("Preparing clean print document...");
+                      await triggerCleanPrint(content, themeConfig);
+                    } catch (e) {
+                      console.error(e);
+                      printResume();
+                    }
                   }}
                   className="w-full px-3 py-2 text-left hover:bg-slate-800 text-slate-200 flex items-center gap-2 border-t border-slate-800"
                 >
                   <Printer className="w-4 h-4 text-amber-400" />
                   <div>
-                    <div className="font-semibold">Print Dialog</div>
-                    <div className="text-[10px] text-slate-500">System @media print styling</div>
+                    <div className="font-semibold">Print Resume (Clean)</div>
+                    <div className="text-[10px] text-slate-500">Zero browser headers, footers or URL marks</div>
                   </div>
                 </button>
               </div>

@@ -2,17 +2,33 @@
 
 import React, { useState } from "react";
 import { useResumeStore } from "@/lib/store/useResumeStore";
-import { ResumeTemplateDispatcher } from "@/templates/ResumeTemplateDispatcher";
-import { ZoomIn, ZoomOut, ShieldCheck, Printer } from "lucide-react";
-import { printResume } from "@/lib/export/pdfExporter";
+import { SharedPageLayout } from "@/components/preview/SharedPageLayout";
+import { ZoomIn, ZoomOut, ShieldCheck, Printer, FileText } from "lucide-react";
+import { triggerCleanPrint } from "@/lib/export/pdfExporter";
 
 export const LivePreviewPane: React.FC = () => {
   const { content, themeConfig } = useResumeStore();
   const [zoom, setZoom] = useState<number>(85); // 85% is optimal on standard 1080p split screen
+  const [detectedPageCount, setDetectedPageCount] = useState<number>(1);
+  const [isPrinting, setIsPrinting] = useState<boolean>(false);
 
   const handleZoomIn = () => setZoom((prev) => Math.min(130, prev + 10));
   const handleZoomOut = () => setZoom((prev) => Math.max(50, prev - 10));
   const handleResetZoom = () => setZoom(85);
+
+  const pageSizeLabel = (themeConfig.pageSize || "a4").toUpperCase();
+
+  const handlePrint = async () => {
+    try {
+      setIsPrinting(true);
+      await triggerCleanPrint(content, themeConfig);
+    } catch (e) {
+      console.error(e);
+      window.print();
+    } finally {
+      setIsPrinting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full bg-slate-950/60 relative overflow-hidden border-l border-slate-800">
@@ -22,7 +38,10 @@ export const LivePreviewPane: React.FC = () => {
           <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
             <ShieldCheck className="w-3 h-3" /> Live ATS Preview
           </span>
-          <span className="text-[10px] text-slate-500 hidden sm:inline">Standard A4 (210mm × 297mm)</span>
+          <span className="flex items-center gap-1 text-[10px] text-slate-300 font-mono bg-slate-800 px-2 py-0.5 rounded">
+            <FileText className="w-3 h-3 text-indigo-400" />
+            {detectedPageCount} {detectedPageCount === 1 ? "Page" : "Pages"} ({pageSizeLabel})
+          </span>
         </div>
 
         {/* Zoom & Print Buttons */}
@@ -50,9 +69,10 @@ export const LivePreviewPane: React.FC = () => {
           </button>
           <div className="w-[1px] h-3.5 bg-slate-800 mx-1" />
           <button
-            onClick={printResume}
+            onClick={handlePrint}
+            disabled={isPrinting}
             className="p-1 hover:text-white hover:bg-slate-800 rounded transition-colors"
-            title="Print Preview (Ctrl+P)"
+            title="Clean Print / Save PDF (Ctrl+P)"
           >
             <Printer className="w-3.5 h-3.5" />
           </button>
@@ -61,17 +81,13 @@ export const LivePreviewPane: React.FC = () => {
 
       {/* Canvas Area with Auto Scroll */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex justify-center items-start">
-        <div
-          style={{
-            transform: `scale(${zoom / 100})`,
-            transformOrigin: "top center",
-            transition: "transform 0.15s ease-out",
-          }}
-          className="shadow-2xl"
-        >
-          <div id="resume-preview-pane">
-            <ResumeTemplateDispatcher content={content} themeConfig={themeConfig} />
-          </div>
+        <div id="resume-preview-pane" className="shadow-2xl">
+          <SharedPageLayout
+            content={content}
+            themeConfig={themeConfig}
+            scale={zoom / 100}
+            onPageCountChange={setDetectedPageCount}
+          />
         </div>
       </div>
     </div>

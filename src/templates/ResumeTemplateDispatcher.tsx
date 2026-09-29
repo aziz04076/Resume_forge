@@ -6,12 +6,16 @@ import { ExecutiveClassic } from "./ExecutiveClassic";
 import { CreativeSidebar } from "./CreativeSidebar";
 import { FresherStarter } from "./FresherStarter";
 import { ModernSlate } from "./ModernSlate";
+import { ClassicProfessional } from "./ClassicProfessional";
 
 export const ResumeTemplateDispatcher: React.FC<TemplateProps> = (props) => {
   const { themeConfig } = props;
   const templateId = themeConfig.templateId || "minimal-ats";
 
   switch (templateId) {
+    case "classic-professional":
+      return <ClassicProfessional {...props} />;
+
     case "tech-mono":
     case "lead-architect":
     case "devops-cloud":

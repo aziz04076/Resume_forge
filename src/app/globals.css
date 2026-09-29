@@ -115,34 +115,76 @@
   box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.25);
 }
 
-/* Standard A4 Paper size for pixel-perfect printing & export */
+/* Standard Physical Paper sizes for WYSIWYG preview & print */
 .resume-paper {
   width: 210mm;
   min-height: 297mm;
   box-sizing: border-box;
   background-color: #ffffff;
-  color: #1a1a1a;
+  color: #0f172a;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   margin: 0 auto;
   position: relative;
-  page-break-after: always;
+  page-break-after: auto;
+  break-after: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+/* Letter page dimension override */
+.resume-paper[data-page-size="letter"] {
+  width: 215.9mm;
+  min-height: 279.4mm;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@page letter-page {
+  size: letter portrait;
+  margin: 0;
 }
 
 @media print {
-  body {
-    background: transparent !important;
-    color: #000000 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .resume-paper {
-    box-shadow: none !important;
+  @page {
     margin: 0 !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     width: 100% !important;
     height: auto !important;
-    min-height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
+
+  /* Hide all application chrome and navigation */
+  .no-print,
+  nav,
+  aside,
+  header:not(.resume-paper header),
+  footer:not(.resume-paper footer),
+  button,
+  [data-sonner-toaster] {
+    display: none !important;
+  }
+
+  .resume-paper {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .resume-paper .resume-section,
+  .resume-paper .resume-entry,
   .resume-paper section,
   .resume-paper article,
   .resume-paper header,
@@ -152,4 +194,12 @@
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
+
+  .resume-paper .resume-section-heading,
+  .resume-paper h2,
+  .resume-paper h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
 }
+

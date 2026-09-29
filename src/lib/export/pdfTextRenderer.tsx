@@ -306,11 +306,11 @@ export const ResumePdfDocument: React.FC<ResumePdfDocumentProps> = ({ content, t
   return (
     <Document
       title={`${personalInfo.fullName || "Candidate"} - Resume`}
-      author={personalInfo.fullName || "ResumeForge Candidate"}
+      author={personalInfo.fullName || "Candidate"}
       subject={personalInfo.jobTitle || "Professional Resume"}
       keywords={keywordsString}
-      creator="ResumeForge"
-      producer="ResumeForge Vector Engine"
+      creator={themeConfig?.brandingLevel === "none" ? undefined : "ResumeForge"}
+      producer={themeConfig?.brandingLevel === "none" ? undefined : "ResumeForge Vector PDF Engine"}
     >
       <Page size={pageSize} style={styles.page}>
         {/* Header Section */}
@@ -598,11 +598,11 @@ export const ResumePdfDocument: React.FC<ResumePdfDocumentProps> = ({ content, t
             ))
           : null}
 
-        {/* Subtle, respectful footer mark (default ON, removable via theme setting) */}
-        {themeConfig?.showCreatedWithBadge !== false && (
+        {/* Optional visible branding footer (Default OFF / metadata-only) */}
+        {themeConfig?.brandingLevel === "visible" && (
           <View style={styles.footerNote} wrap={false}>
             <Text style={styles.footerText}>
-              Created with ResumeForge • Template layout © ResumeForge. Candidate owns 100% of resume content.
+              Created with ResumeForge • Candidate owns 100% of resume content.
             </Text>
           </View>
         )}
